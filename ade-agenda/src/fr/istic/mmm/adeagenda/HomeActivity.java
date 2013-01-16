@@ -1,10 +1,10 @@
 package fr.istic.mmm.adeagenda;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 
-public class HomeActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+
+public class HomeActivity extends SherlockActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,11 +12,4 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_home, menu);
-        return true;
-    }
-    
 }
