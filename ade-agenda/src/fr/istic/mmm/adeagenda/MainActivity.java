@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,6 +103,10 @@ public class MainActivity extends Activity {
 		if (mAuthTask != null) {
 			return;
 		}
+		
+		// TODO FIXME XXX get rid of this hack and do the right thing to do :D
+		Intent hack = new Intent(this, HomeActivity.class);
+		startActivity(hack);
 
 		// Reset errors.
 		mEmailView.setError(null);

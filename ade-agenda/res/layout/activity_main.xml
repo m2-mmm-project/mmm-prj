@@ -3,7 +3,6 @@
     tools:context=".MainActivity" >
 
     <!-- Login progress -->
-
     <LinearLayout
         android:id="@+id/login_status"
         android:layout_width="wrap_content"
@@ -30,7 +29,6 @@
     </LinearLayout>
 
     <!-- Login form -->
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
