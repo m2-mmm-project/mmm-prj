@@ -9,4 +9,4 @@ Pour commencer à développer :
   - cloner le dépôt
   - importer le projet dans Eclipse
   - télécharger ActionBarSherlock
-  - Configurer Eclipse pour que tout roule en suivant ça http://stackoverflow.com/questions/9602364/i-can-not-connect-actionbarsherlock-to-the-project
+  - Configurer Eclipse pour que tout roule en suivant ça http://stackoverflow.com/a/9604144
