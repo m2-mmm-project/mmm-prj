@@ -2,7 +2,7 @@ package fr.istic.mmm.adeagenda.model;
 
 import java.util.Date;
 
-public class Resource {
+public class Event {
 
 	private String name;
 	private Date start;
@@ -20,7 +20,7 @@ public class Resource {
 	 * @param place where the resource takes place
 	 * @param description informations about the resource
 	 */
-	public Resource(String name, Date start, Date end, String place, String description) {
+	public Event(String name, Date start, Date end, String place, String description) {
 		this.name = name;
 		
 		// check if end > start, swap them if not

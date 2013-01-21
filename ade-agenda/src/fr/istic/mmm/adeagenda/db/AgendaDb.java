@@ -1,6 +1,6 @@
 package fr.istic.mmm.adeagenda.db;
 
-import fr.istic.mmm.adeagenda.model.Resource;
+import fr.istic.mmm.adeagenda.model.Event;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,11 +27,11 @@ public class AgendaDb {
 	}
 	
 	/**
-	 * Convert a Cursor to a Resource object
+	 * Convert a Cursor to a Event object
 	 * @param c cursor
-	 * @return Resource object
+	 * @return Event object
 	 */
-	private Resource cursorToResource(Cursor c){
+	private Event cursorToEvent(Cursor c){
 		// no element
 		if (c.getCount() == 0) return null;
 			
