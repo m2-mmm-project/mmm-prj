@@ -12,12 +12,12 @@ public class Event {
 	private String description;
 	
 	/**
-	 * Creates a resources with the given value.
+	 * Creates an event with the given value.
 	 * If end > start then the two dates will be swap resulting in start being < end
 	 * @param name name of the resource
 	 * @param start starting time
 	 * @param end ending time
-	 * @param place where the resource takes place
+	 * @param place where the event takes place
 	 * @param description informations about the resource
 	 */
 	public Event(String name, Date start, Date end, String place, String description) {
