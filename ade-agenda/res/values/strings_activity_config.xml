@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="title_activity_config">ADE Agenda configuration</string>
+	<string name="btn_load_calendar">Load from the internet</string>
+	<string name="btn_validate">Validate</string>
+
+</resources>
