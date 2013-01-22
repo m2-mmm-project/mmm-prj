@@ -52,7 +52,7 @@ public class CalendarReader {
 		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
 		List<Event> events = new ArrayList<Event>();
 		for (VEvent e : col){
-			events.add(new Event(e.getName(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().getValue(),e.getDescription().getValue()));
+			events.add(new Event(e.getSummary().getValue(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().getValue(),e.getDescription().getValue()));
 		}
 		
 		return events;
@@ -63,7 +63,7 @@ public class CalendarReader {
 		Collection<VEvent> col = calendar.getComponents(Component.VEVENT);
 		List<Event> events = new ArrayList<Event>();
 		for (VEvent e : col){
-			events.add(new Event(e.getName(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().toString(),e.getDescription().toString()));
+			events.add(new Event(e.getSummary().getValue(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().toString(),e.getDescription().toString()));
 		}
 		return events;
 	}

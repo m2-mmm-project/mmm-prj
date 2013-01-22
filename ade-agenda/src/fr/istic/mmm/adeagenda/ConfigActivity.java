@@ -38,12 +38,13 @@ public class ConfigActivity extends Activity {
 						try {
 							// Téléchargement du fichier iCal
 							showToast("Downloading calendar...");
+				        	
 							URL url = new URL("http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType=ical&login=cal&password=visu&resources=129&firstDate=2012-08-22&lastDate=2013-12-31&projectId=31");
 					        URLConnection conexion = url.openConnection();
 					        conexion.connect();
 					        int lenghtOfFile = conexion.getContentLength();
 					        InputStream is = url.openStream();
-					        File testDirectory = new File(Environment.getDataDirectory() + "/ADECalendar");
+					        File testDirectory = new File(getFilesDir().getAbsolutePath() + "/ADECalendar");
 					        if (!testDirectory.exists()) {
 					        	Log.v("Calendar", "Création dossier ...");
 					            if(testDirectory.mkdir()){
@@ -51,8 +52,9 @@ public class ConfigActivity extends Activity {
 					            }
 					            Log.v("Calendar", testDirectory.getAbsolutePath());
 					        }
-					        
-					        FileOutputStream fos = new FileOutputStream(testDirectory + "/ADECal.ics"); // TODO FNF
+
+				            Log.v("Calendar", "Enregistrement du fichier ...");
+					        FileOutputStream fos = new FileOutputStream(testDirectory + "/ADECal.ics");
 					        byte data[] = new byte[1024];
 					        int count = 0;
 					        long total = 0;
@@ -67,15 +69,18 @@ public class ConfigActivity extends Activity {
 					        }
 					        is.close();
 					        fos.close();
-					        
+
+				            Log.v("Calendar", "Enregistrement du fichier terminé");
 							// Chargement fichier ics
-							InputStream in = new FileInputStream(new File(Environment.getDataDirectory() + "/ADECalendar", "ADECal.ics"));
+							InputStream in = new FileInputStream(new File(getFilesDir().getAbsolutePath() + "/ADECalendar", "ADECal.ics"));
 							CalendarReader reader = new CalendarReader(in);
 							showToast("Reading calendar...");
-							List<Event> events = reader.allEvents();
-
+							List<Event> events = reader.eventsOfTheDay();
+							Log.v("Calendar",  "Affichage des event ...");
 							for (Event event : events) {
-								Log.v("Calendar", " " + event.getName() + " " + event.getDescription());
+								Log.v("Event name", "[" + event.getName() + "]");
+								Log.v("Event date", event.getStart().toGMTString() +" "+ event.getDuration());
+								Log.v("Event description", event.getDescription());
 							}
 							showToast("Done !");
 						} catch (IOException e) {
@@ -91,6 +96,7 @@ public class ConfigActivity extends Activity {
 	public void showToast(final String toast) {
 		runOnUiThread(new Runnable() {
 			public void run() {
+				Log.v("Toast", toast);
 				Toast.makeText(ConfigActivity.this, toast, Toast.LENGTH_SHORT)
 						.show();
 			}
