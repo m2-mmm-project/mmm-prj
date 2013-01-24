@@ -9,6 +9,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
+import net.fortuna.ical4j.model.DateTime;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.model.Event;
@@ -33,53 +36,83 @@ public class ConfigActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
+				final DatePicker start_picker = (DatePicker)findViewById(R.id.date_start);
+				final DatePicker end_picker = (DatePicker)findViewById(R.id.date_end);
+				
 				new Thread(new Runnable() {
 					public void run() {
 						try {
-							// Téléchargement du fichier iCal
-							showToast("Downloading calendar...");
-				        	
-							URL url = new URL("http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType=ical&login=cal&password=visu&resources=129&firstDate=2012-08-22&lastDate=2013-12-31&projectId=31");
-					        URLConnection conexion = url.openConnection();
-					        conexion.connect();
-					        int lenghtOfFile = conexion.getContentLength();
-					        InputStream is = url.openStream();
-					        File testDirectory = new File(getFilesDir().getAbsolutePath() + "/ADECalendar");
-					        if (!testDirectory.exists()) {
+							
+					        // Création du dossier de destination
+					        File downloadDirectory = new File(getFilesDir().getAbsolutePath() + "/ADECalendar");
+					        if (!downloadDirectory.exists()) {
 					        	Log.v("Calendar", "Création dossier ...");
-					            if(testDirectory.mkdir()){
+					            if(downloadDirectory.mkdir()){
 					            	Log.v("Calendar", "Création dossier ok");
 					            }
-					            Log.v("Calendar", testDirectory.getAbsolutePath());
+					            Log.v("Calendar", downloadDirectory.getAbsolutePath());
 					        }
+							
+							// Téléchargement du fichier iCal
+							showToast("Connexion ...");
 
-				            Log.v("Calendar", "Enregistrement du fichier ...");
-					        FileOutputStream fos = new FileOutputStream(testDirectory + "/ADECal.ics");
+							String firstDate = formatDate(start_picker.getDayOfMonth(), start_picker.getMonth()+1, start_picker.getYear());
+							String lastDate = formatDate(end_picker.getDayOfMonth(), end_picker.getMonth()+1, end_picker.getYear());
+							String resources = "129";
+							String calType = "ical";
+							String login = "cal";
+							String password = "visu";
+							String projectId = "31";
+							
+							String cal_url = "http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType="+calType
+									+"&login="+login
+									+"&password="+password
+									+"&resources="+resources
+									+"&firstDate="+firstDate
+									+"&lastDate="+lastDate
+									+"&projectId="+projectId;
+
+							showToast("Téléchargement du fichier ...");
+							showToast(cal_url);
+							URL url = new URL(cal_url);
+					        URLConnection conexion = url.openConnection();
+					        InputStream is = url.openStream();
+					        conexion.connect();
+					        
+					        // Téléchargement du fichier
+					        showToast("Téléchargement du fichier ...");
+					        FileOutputStream destFile = new FileOutputStream(downloadDirectory + "/ADECal.ics");
+					        
+					        double lenghtOfFile = conexion.getContentLength();
 					        byte data[] = new byte[1024];
 					        int count = 0;
-					        long total = 0;
+					        double downloaded = 0;
 					        int progress = 0;
 					        while ((count = is.read(data)) != -1) {
-					            total += count;
-					            int progress_temp = (int) total * 100 / lenghtOfFile;
+					            downloaded += count;
+					            int progress_temp = (int) ((downloaded / (lenghtOfFile*100)) * 100) ;
+
 					            if (progress_temp % 10 == 0 && progress != progress_temp) {
 					                progress = progress_temp;
+					                showToast("Progress " +progress_temp);
 					            }
-					            fos.write(data, 0, count);
+					            destFile.write(data, 0, count);
 					        }
 					        is.close();
-					        fos.close();
+					        destFile.close();
 
-				            Log.v("Calendar", "Enregistrement du fichier terminé");
+					        showToast("Téléchargement du fichier terminé");
 							// Chargement fichier ics
 							InputStream in = new FileInputStream(new File(getFilesDir().getAbsolutePath() + "/ADECalendar", "ADECal.ics"));
 							CalendarReader reader = new CalendarReader(in);
-							showToast("Reading calendar...");
+							showToast("Récupération des events du jour...");
 							List<Event> events = reader.eventsOfTheDay();
-							Log.v("Calendar",  "Affichage des event ...");
+							
+							showToast("Affichage des event ...");
 							for (Event event : events) {
+								showToast(event.getName());
 								Log.v("Event name", "[" + event.getName() + "]");
-								Log.v("Event date", event.getStart().toGMTString() +" "+ event.getDuration());
+								Log.v("Event date", event.getStart().toGMTString() +" - "+ (event.getDuration() / (1000*60*60)) +" Heures");
 								Log.v("Event description", event.getDescription());
 							}
 							showToast("Done !");
@@ -103,4 +136,24 @@ public class ConfigActivity extends Activity {
 		});
 	}
 
+	private String formatDate(int day, int month, int year){
+		
+		String date_str = year+"-";
+		
+		if(month<10){
+			date_str += "0"+month+"-";
+		}
+		else{
+			date_str += month+"-";
+		}
+		
+		if(day<10){
+			date_str += "0"+day+"-";
+		}
+		else{
+			date_str += day+"-";
+		}
+		return date_str;
+	}
+	
 }

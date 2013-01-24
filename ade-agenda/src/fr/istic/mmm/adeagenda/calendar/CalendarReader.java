@@ -19,15 +19,25 @@ import net.fortuna.ical4j.model.Period;
 import net.fortuna.ical4j.model.component.VEvent;
 import fr.istic.mmm.adeagenda.model.Event;
 
-public class CalendarReader {
+/**
+ * @author Clément Hardouin
+ *
+ */
+public class CalendarReader implements ICalendarReader {
 
 	private Calendar calendar;
-	
-	public CalendarReader(Calendar c){
+
+	/**
+	 * @param c
+	 */
+	public CalendarReader(Calendar c) {
 		calendar = c;
 	}
-	
-	public CalendarReader(InputStream in){
+
+	/**
+	 * @param in
+	 */
+	public CalendarReader(InputStream in) {
 		CalendarBuilder builder = new CalendarBuilder();
 		try {
 			this.calendar = builder.build(in);
@@ -37,8 +47,78 @@ public class CalendarReader {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<Event> eventsOfTheDay(){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#getEventAt(net.fortuna.ical4j.model.DateTime)
+	 */
+	@Override
+	public Event getEventAt(DateTime datetime) {
+		// create a period starting now with a duration of one (1) day..
+		Period period = new Period(datetime, new Dur(0,3,0,0));
+		Rule rule = new PeriodRule(period);
+		Rule[] rules = { rule };
+		Filter filter = new Filter(rules, Filter.MATCH_ALL);
+
+		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
+		VEvent e = col.iterator().next();
+		
+		return new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.getValue(), e.getDescription().getValue());
+		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#getCurrentEvent()
+	 */
+	@Override
+	public Event getCurrentEvent() {
+		java.util.Calendar now = java.util.Calendar.getInstance();
+		// create a period starting now with a duration of one (1) day..
+		Period period = new Period(new DateTime(now.getTime()), new Dur(0,3,0,0));
+		Rule rule = new PeriodRule(period);
+		Rule[] rules = { rule };
+		Filter filter = new Filter(rules, Filter.MATCH_ALL);
+
+		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
+		VEvent e = col.iterator().next();
+		
+		return new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.getValue(), e.getDescription().getValue());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#allEvents()
+	 */
+	@Override
+	public List<Event> allEvents() {
+
+		Collection<VEvent> col = calendar.getComponents(Component.VEVENT);
+		List<Event> events = new ArrayList<Event>();
+		for (VEvent e : col) {
+			events.add(new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.toString(), e.getDescription().toString()));
+		}
+		return events;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheDay()
+	 */
+	@Override
+	public List<Event> eventsOfTheDay() {
 		java.util.Calendar today = java.util.Calendar.getInstance();
 		today.set(java.util.Calendar.HOUR_OF_DAY, 0);
 		today.clear(java.util.Calendar.MINUTE);
@@ -46,42 +126,69 @@ public class CalendarReader {
 		// create a period starting now with a duration of one (1) day..
 		Period period = new Period(new DateTime(today.getTime()), new Dur(1, 0, 0, 0));
 		Rule rule = new PeriodRule(period);
-		Rule[] rules = {rule};
+		Rule[] rules = { rule };
 		Filter filter = new Filter(rules, Filter.MATCH_ALL);
-		
+
 		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
 		List<Event> events = new ArrayList<Event>();
-		for (VEvent e : col){
-			events.add(new Event(e.getSummary().getValue(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().getValue(),e.getDescription().getValue()));
+		for (VEvent e : col) {
+			events.add(new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.getValue(), e.getDescription().getValue()));
 		}
-		
-		return events;
-	}
-	
-	public List<Event> allEvents(){
-		
-		Collection<VEvent> col = calendar.getComponents(Component.VEVENT);
-		List<Event> events = new ArrayList<Event>();
-		for (VEvent e : col){
-			events.add(new Event(e.getSummary().getValue(),e.getStartDate().getDate(), e.getEndDate().getDate(),e.getLocation().toString(),e.getDescription().toString()));
-		}
-		return events;
-	}
-	
-	public void example(){
 
-        VEvent event = (VEvent)calendar.getComponents().get(0);
-		
-        event.getSummary();
-		event.getDescription();
-        
-        event.getStartDate();
-        event.getEndDate();
-        event.getDuration();
-        
-        event.getLocation();
-        event.getGeographicPos();
-           
+		return events;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheDay(net.fortuna
+	 * .ical4j.model.DateTime)
+	 */
+	@Override
+	public List<Event> eventsOfTheDay(DateTime date) {
+		// create a period starting now with a duration of one (1) day..
+		Period period = new Period(date, new Dur(1, 0, 0, 0));
+		Rule rule = new PeriodRule(period);
+		Rule[] rules = { rule };
+		Filter filter = new Filter(rules, Filter.MATCH_ALL);
+
+		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
+		List<Event> events = new ArrayList<Event>();
+		for (VEvent e : col) {
+			events.add(new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.getValue(), e.getDescription().getValue()));
+		}
+
+		return events;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheWeek(net.fortuna
+	 * .ical4j.model.DateTime)
+	 */
+	@Override
+	public List<Event> eventsOfTheWeek(DateTime date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void example() {
+		/*
+		 * VEvent event = (VEvent)calendar.getComponents().get(0);
+		 * 
+		 * event.getSummary(); event.getDescription();
+		 * 
+		 * event.getStartDate(); event.getEndDate(); event.getDuration();
+		 * 
+		 * event.getLocation(); event.getGeographicPos();
+		 */
+	}
+
 }

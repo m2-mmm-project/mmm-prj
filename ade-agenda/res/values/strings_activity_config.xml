@@ -2,6 +2,27 @@
 
     <string name="title_activity_config">ADE Agenda configuration</string>
 	<string name="btn_load_calendar">Load from the internet</string>
-	<string name="btn_validate">Validate</string>
+	
+	<string name="label_date_start">Start</string>
+	<string name="label_date_end">End</string>
+	<string name="label_project">Project</string>
+	<string name="label_ressources">Ressources</string>
+	
+	<string name="btn_back">Back</string>
+	
+	
+    <string name="resource_prompt">Choose a resource</string>
+	
+	 <string-array name="resource_arrays">
+        <item>M2 GL</item>
+        <item>M2 Mitic</item>
+        <item>M1</item>
+    </string-array>
 
+    <string name="project_prompt">Choose a project</string>
+	
+	 <string-array name="project_arrays">
+        <item>Université de Rennes 1 2012</item>
+        <item>Université de Rennes 1 2011</item>
+    </string-array>
 </resources>
