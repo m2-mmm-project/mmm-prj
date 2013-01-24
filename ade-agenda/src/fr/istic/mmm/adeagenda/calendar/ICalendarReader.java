@@ -6,7 +6,7 @@ import net.fortuna.ical4j.model.DateTime;
 import fr.istic.mmm.adeagenda.model.Event;
 
 /**
- * @author Clément Hardouin
+ * @author ClÃ©ment Hardouin
  *
  */
 public interface ICalendarReader {

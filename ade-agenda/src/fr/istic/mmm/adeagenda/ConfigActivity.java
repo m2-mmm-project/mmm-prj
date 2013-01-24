@@ -9,11 +9,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
-import net.fortuna.ical4j.model.DateTime;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,17 +40,17 @@ public class ConfigActivity extends Activity {
 					public void run() {
 						try {
 							
-					        // Création du dossier de destination
+					        // CrÃ©ation du dossier de destination
 					        File downloadDirectory = new File(getFilesDir().getAbsolutePath() + "/ADECalendar");
 					        if (!downloadDirectory.exists()) {
-					        	Log.v("Calendar", "Création dossier ...");
+					        	Log.v("Calendar", "CrÃ©ation dossier ...");
 					            if(downloadDirectory.mkdir()){
-					            	Log.v("Calendar", "Création dossier ok");
+					            	Log.v("Calendar", "CrÃ©ation dossier ok");
 					            }
 					            Log.v("Calendar", downloadDirectory.getAbsolutePath());
 					        }
 							
-							// Téléchargement du fichier iCal
+							// TÃ©lÃ©chargement du fichier iCal
 							showToast("Connexion ...");
 
 							String firstDate = formatDate(start_picker.getDayOfMonth(), start_picker.getMonth()+1, start_picker.getYear());
@@ -72,15 +69,15 @@ public class ConfigActivity extends Activity {
 									+"&lastDate="+lastDate
 									+"&projectId="+projectId;
 
-							showToast("Téléchargement du fichier ...");
+							showToast("TÃ©lÃ©chargement du fichier ...");
 							showToast(cal_url);
 							URL url = new URL(cal_url);
 					        URLConnection conexion = url.openConnection();
 					        InputStream is = url.openStream();
 					        conexion.connect();
 					        
-					        // Téléchargement du fichier
-					        showToast("Téléchargement du fichier ...");
+					        // TÃ©lÃ©chargement du fichier
+					        showToast("TÃ©lÃ©chargement du fichier ...");
 					        FileOutputStream destFile = new FileOutputStream(downloadDirectory + "/ADECal.ics");
 					        
 					        double lenghtOfFile = conexion.getContentLength();
@@ -101,11 +98,11 @@ public class ConfigActivity extends Activity {
 					        is.close();
 					        destFile.close();
 
-					        showToast("Téléchargement du fichier terminé");
+					        showToast("TÃ©lÃ©chargement du fichier terminÃ©");
 							// Chargement fichier ics
 							InputStream in = new FileInputStream(new File(getFilesDir().getAbsolutePath() + "/ADECalendar", "ADECal.ics"));
 							CalendarReader reader = new CalendarReader(in);
-							showToast("Récupération des events du jour...");
+							showToast("RÃ©cupÃ©ration des events du jour...");
 							List<Event> events = reader.eventsOfTheDay();
 							
 							showToast("Affichage des event ...");
