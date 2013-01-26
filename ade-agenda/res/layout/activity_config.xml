@@ -4,42 +4,37 @@
     android:layout_height="match_parent"
     tools:context=".ConfigActivity" >
 
-    <LinearLayout
-        android:id="@+id/layout_config"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/layout_btns"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+        android:layout_alignParentTop="true" >
 
         <LinearLayout
+            android:id="@+id/layout_config"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/label_date_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_date_start" />
+                android:text="@string/label_date_start"
+                android:textAlignment="center" />
 
             <DatePicker
                 android:id="@+id/date_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/label_date_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_date_end" />
+                android:text="@string/label_date_end"
+                android:textAlignment="center" />
 
             <DatePicker
                 android:id="@+id/date_end"
@@ -47,23 +42,12 @@
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
             <Spinner
                 android:id="@+id/project_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/project_arrays"
                 android:prompt="@string/project_prompt" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
             <Spinner
                 android:id="@+id/resource_spinner"
@@ -72,7 +56,7 @@
                 android:entries="@array/resource_arrays"
                 android:prompt="@string/resource_prompt" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/layout_btns"
@@ -87,6 +71,7 @@
             android:id="@+id/btn_load"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClickLoad"
             android:text="@string/btn_load_calendar" />
 
         <Button
