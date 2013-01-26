@@ -8,7 +8,7 @@
 	<string name="label_project">Project</string>
 	<string name="label_ressources">Ressources</string>
 	
-	<string name="btn_back">Back</string>
+	<string name="btn_save">Enregistrer</string>
 	
 	
     <string name="resource_prompt">Choose a resource</string>

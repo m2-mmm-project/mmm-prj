@@ -18,10 +18,10 @@
 
             <TextView
                 android:id="@+id/label_date_start"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_date_start"
-                android:textAlignment="center" />
+                android:gravity="center_horizontal"
+                android:text="@string/label_date_start" />
 
             <DatePicker
                 android:id="@+id/date_start"
@@ -31,10 +31,10 @@
 
             <TextView
                 android:id="@+id/label_date_end"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_date_end"
-                android:textAlignment="center" />
+                android:gravity="center_horizontal"
+                android:text="@string/label_date_end" />
 
             <DatePicker
                 android:id="@+id/date_end"
@@ -60,11 +60,9 @@
 
     <LinearLayout
         android:id="@+id/layout_btns"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:orientation="vertical" >
 
         <Button
@@ -75,10 +73,11 @@
             android:text="@string/btn_load_calendar" />
 
         <Button
-            android:id="@+id/btn_valid"
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_back" />
+            android:onClick="onClickValidate"
+            android:text="@string/btn_save" />
     </LinearLayout>
 
 </RelativeLayout>

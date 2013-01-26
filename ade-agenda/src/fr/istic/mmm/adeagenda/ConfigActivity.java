@@ -68,6 +68,13 @@ public class ConfigActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
+	public void onClickValidate(View view) {
+		// Enregistrer les modifications
+		// TODO
+		
+		this.finish();
+	}
 
 	public void openICSFile() {
 		// Chargement fichier ics
@@ -99,6 +106,7 @@ public class ConfigActivity extends Activity {
 		});
 	}
 
+	// AsyncTask pour le téléchargement du fichier ICS
 	private class ProgressTask extends AsyncTask<URL, Void, Boolean> {
 
 		private ProgressDialog dialog;
