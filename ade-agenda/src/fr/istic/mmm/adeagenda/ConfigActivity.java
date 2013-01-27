@@ -18,8 +18,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.model.Event;
@@ -30,44 +32,57 @@ public class ConfigActivity extends Activity {
 	public static final String ICS_FILE_NAME = "ADECal.ics";
 	public static final String DOWNLOAD_DIRECTORY = Environment
 			.getExternalStorageDirectory().getAbsolutePath() + "/ADECalendar";
-	
+
 	private EditText etDateStart;
 	private EditText etDateEnd;
 	private EditText selectedEdit;
-	
+
 	private DatePickerDialog dialogDateStart;
 	private DatePickerDialog dialogDateEnd;
 
 	// DialogPicker Callback
-	private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                	selectedEdit.setText(DateFormater.dateToString(dayOfMonth, monthOfYear, year));
-                }
-            };
-            
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			selectedEdit.setText(DateFormater.dateToString(dayOfMonth,
+					monthOfYear, year));
+		}
+	};
+
+	private RelativeLayout layoutConfig;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config);
-		
+
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
-		
-		dialogDateStart = new DatePickerDialog(this, mDateSetListener, 2012, 8, 1);
-		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, 2013, 6, 31);
+
+		dialogDateStart = new DatePickerDialog(this, mDateSetListener, 2012, 8,
+				1);
+		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, 2013, 6,
+				31);
+
+		layoutConfig = (RelativeLayout) findViewById(R.id.layout_alarm_config);
 	}
-	
+
 	public void onClickDateStart(View view) {
 		selectedEdit = etDateStart;
 		dialogDateStart.show();
 	}
-	
+
 	public void onClickDateEnd(View view) {
 		selectedEdit = etDateEnd;
 		dialogDateEnd.show();
+	}
+
+	public void onClickCheckBoxAlarm(View view) {
+		if (((CheckBox) view).isChecked())
+			layoutConfig.setVisibility(View.VISIBLE);
+		else
+			layoutConfig.setVisibility(View.GONE);
 	}
 
 	public void onClickLoad(View view) {
@@ -91,7 +106,7 @@ public class ConfigActivity extends Activity {
 				+ "&lastDate="
 				+ etDateEnd.getText()
 				+ "&projectId=" + projectId;
-		
+
 		// AsynkTask pour le téléchargement
 		try {
 			new ProgressTask(this).execute(new URL(cal_url));
@@ -99,11 +114,11 @@ public class ConfigActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void onClickValidate(View view) {
 		// Enregistrer les modifications
 		// TODO
-		
+
 		this.finish();
 	}
 
@@ -117,8 +132,9 @@ public class ConfigActivity extends Activity {
 
 			for (Event event : events) {
 				Log.v("Event name", "[" + event.getName() + "]");
-				Log.v("Event date", DateFormater.dateToString(event.getStart()) + " - "
-						+ (event.getDuration() / (1000 * 60 * 60)) + " Heures");
+				Log.v("Event date", DateFormater.dateToString(event.getStart())
+						+ " - " + (event.getDuration() / (1000 * 60 * 60))
+						+ " Heures");
 				Log.v("Event description", event.getDescription());
 			}
 			showToast("Done !");

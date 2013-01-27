@@ -2,14 +2,37 @@
 
     <string name="title_activity_config">ADE Agenda configuration</string>
 	
+    <string name="title_separator_dates">Dates</string>
     <string name="label_start_date">From : </string>
 	<string name="hint_date_start">Start Date</string>
 	
 	<string name="label_end_date">To : </string>
 	<string name="hint_date_end">End Date</string>
 	
+	<string name="title_separator_ressources">Ressources</string>
 	<string name="label_project">Project</string>
 	<string name="label_ressources">Ressources</string>
+	
+	<string name="title_separator_alarm">Alarm</string>
+	<string name="label_alarm">Active Alarm</string>
+	
+	<string-array name="time_alarm">
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>60 minutes</item>
+        <item>90 minutes</item>
+    </string-array>
+    
+	<string-array name="recurence_alarm">
+	    <item>Before each</item>
+	    <item>Before each half day</item>
+	    <item>Before each day</item>
+	</string-array>
+    
 	
 	<string name="btn_load_calendar">Load from the internet</string>
 	<string name="btn_save">Enregistrer</string>
