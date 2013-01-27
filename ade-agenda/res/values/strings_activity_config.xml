@@ -1,13 +1,17 @@
 <resources>
 
     <string name="title_activity_config">ADE Agenda configuration</string>
-	<string name="btn_load_calendar">Load from the internet</string>
 	
-	<string name="label_date_start">Start</string>
-	<string name="label_date_end">End</string>
+    <string name="label_start_date">From : </string>
+	<string name="hint_date_start">Start Date</string>
+	
+	<string name="label_end_date">To : </string>
+	<string name="hint_date_end">End Date</string>
+	
 	<string name="label_project">Project</string>
 	<string name="label_ressources">Ressources</string>
 	
+	<string name="btn_load_calendar">Load from the internet</string>
 	<string name="btn_save">Enregistrer</string>
 	
 	

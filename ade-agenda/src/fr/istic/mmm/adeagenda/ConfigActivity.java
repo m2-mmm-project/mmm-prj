@@ -11,6 +11,7 @@ import java.net.URLConnection;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.model.Event;
@@ -28,21 +30,48 @@ public class ConfigActivity extends Activity {
 	public static final String ICS_FILE_NAME = "ADECal.ics";
 	public static final String DOWNLOAD_DIRECTORY = Environment
 			.getExternalStorageDirectory().getAbsolutePath() + "/ADECalendar";
+	
+	private EditText etDateStart;
+	private EditText etDateEnd;
+	private EditText selectedEdit;
+	
+	private DatePickerDialog dialogDateStart;
+	private DatePickerDialog dialogDateEnd;
 
+	// DialogPicker Callback
+	private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                	selectedEdit.setText(DateFormater.dateToString(dayOfMonth, monthOfYear, year));
+                }
+            };
+            
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config);
+		
+		// Edit text date
+		etDateStart = (EditText) findViewById(R.id.editText_date_start);
+		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
+		
+		dialogDateStart = new DatePickerDialog(this, mDateSetListener, 2012, 8, 1);
+		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, 2013, 6, 31);
+	}
+	
+	public void onClickDateStart(View view) {
+		selectedEdit = etDateStart;
+		dialogDateStart.show();
+	}
+	
+	public void onClickDateEnd(View view) {
+		selectedEdit = etDateEnd;
+		dialogDateEnd.show();
 	}
 
 	public void onClickLoad(View view) {
 		// Création de l'URL avec les bons paramètres
-		final DatePicker start_picker = (DatePicker) findViewById(R.id.date_start);
-		final DatePicker end_picker = (DatePicker) findViewById(R.id.date_end);
-		String firstDate = DateFormater.dateToString(start_picker.getDayOfMonth(),
-				start_picker.getMonth() + 1, start_picker.getYear());
-		String lastDate = DateFormater.dateToString(end_picker.getDayOfMonth(),
-				end_picker.getMonth() + 1, end_picker.getYear());
 		String resources = "129";
 		String calType = "ical";
 		String login = "cal";
@@ -58,9 +87,11 @@ public class ConfigActivity extends Activity {
 				+ "&resources="
 				+ resources
 				+ "&firstDate="
-				+ firstDate
-				+ "&lastDate=" + lastDate + "&projectId=" + projectId;
-
+				+ etDateStart.getText()
+				+ "&lastDate="
+				+ etDateEnd.getText()
+				+ "&projectId=" + projectId;
+		
 		// AsynkTask pour le téléchargement
 		try {
 			new ProgressTask(this).execute(new URL(cal_url));

@@ -8,6 +8,9 @@ public class DateFormater {
 
 		String date_str = year + "-";
 
+		// Les mois commencent à 1 (Janvier = 1 - Décembre = 12)
+		month++;
+		
 		if (month < 10) {
 			date_str += "0" + month + "-";
 		} else {
@@ -15,10 +18,11 @@ public class DateFormater {
 		}
 
 		if (day < 10) {
-			date_str += "0" + day + "-";
+			date_str += "0" + day;
 		} else {
-			date_str += day + "-";
+			date_str += day;
 		}
+		
 		return date_str;
 	}
 	
