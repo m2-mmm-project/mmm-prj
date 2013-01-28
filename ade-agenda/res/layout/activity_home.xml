@@ -25,19 +25,22 @@
             android:id="@+id/btn_config"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_config" />
+            android:text="@string/btn_config"
+            android:onClick="onClickConfig" />
 
         <Button
             android:id="@+id/btn_agenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_agenda" />
+            android:text="@string/btn_agenda"
+            android:onClick="onClickAgenda" />
 
         <Button
             android:id="@+id/btn_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_map" />
+            android:text="@string/btn_map"
+            android:onClick="onClickMap" />
     </LinearLayout>
 
     <TextView
