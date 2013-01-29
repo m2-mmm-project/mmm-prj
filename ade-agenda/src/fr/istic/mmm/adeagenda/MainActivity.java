@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -52,7 +53,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		MainActivity.context = getApplicationContext();
+		
 		setContentView(R.layout.activity_main);
 
 		// Set up the login form.
@@ -244,4 +247,10 @@ public class MainActivity extends Activity {
 			showProgress(false);
 		}
 	}
+	
+	private static Context context;
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
 }

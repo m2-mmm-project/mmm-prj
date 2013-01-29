@@ -40,7 +40,6 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="@string/hint_date_start"
                     android:onClick="onClickDateStart" />
             </LinearLayout>
 
@@ -61,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="@string/hint_date_end"
                     android:onClick="onClickDateEnd" />
             </LinearLayout>
 

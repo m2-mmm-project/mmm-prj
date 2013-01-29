@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -35,54 +36,87 @@ public class ConfigActivity extends Activity {
 
 	private EditText etDateStart;
 	private EditText etDateEnd;
-	private EditText selectedEdit;
 
 	private DatePickerDialog dialogDateStart;
 	private DatePickerDialog dialogDateEnd;
+
+	private int startYear;
+	private int startMounth;
+	private int startDay;
+	private int endYear;
+	private int endMounth;
+	private int endDay;
 
 	// DialogPicker Callback
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			selectedEdit.setText(DateFormater.dateToString(dayOfMonth,
-					monthOfYear, year));
+			if (view == findViewById(R.id.editText_date_start)) {
+				startYear = year;
+				startMounth = monthOfYear;
+				startDay = dayOfMonth;
+				etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+						startMounth, startDay));
+			} else if (view == findViewById(R.id.editText_date_end)) {
+				endYear = year;
+				endMounth = monthOfYear;
+				endDay = dayOfMonth;
+				etDateEnd.setText(DateFormater.dateToDisplayString(endYear,
+						endMounth, endDay));
+			}
 		}
 	};
 
-	private RelativeLayout layoutConfig;
+	private RelativeLayout layoutAlramConfig;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config);
 
+		startYear = Calendar.getInstance().get(Calendar.YEAR);
+		startMounth = Calendar.SEPTEMBER;
+		startDay = 1;
+
+		endYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
+		endMounth = Calendar.SEPTEMBER;
+		endDay = 31;
+
+		if (Calendar.getInstance().get(Calendar.MONTH) < Calendar.AUGUST) {
+			startYear--;
+			endYear--;
+		}
+
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
+		etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+				startMounth, startDay));
+
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
+		etDateEnd.setText(DateFormater.dateToDisplayString(endYear, endMounth,
+				endDay));
 
-		dialogDateStart = new DatePickerDialog(this, mDateSetListener, 2012, 8,
-				1);
-		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, 2013, 6,
-				31);
+		dialogDateStart = new DatePickerDialog(this, mDateSetListener,
+				startYear, startMounth, startDay);
+		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, endYear,
+				endMounth, endDay);
 
-		layoutConfig = (RelativeLayout) findViewById(R.id.layout_alarm_config);
+		layoutAlramConfig = (RelativeLayout) findViewById(R.id.layout_alarm_config);
 	}
 
 	public void onClickDateStart(View view) {
-		selectedEdit = etDateStart;
 		dialogDateStart.show();
 	}
 
 	public void onClickDateEnd(View view) {
-		selectedEdit = etDateEnd;
 		dialogDateEnd.show();
 	}
 
 	public void onClickCheckBoxAlarm(View view) {
 		if (((CheckBox) view).isChecked())
-			layoutConfig.setVisibility(View.VISIBLE);
+			layoutAlramConfig.setVisibility(View.VISIBLE);
 		else
-			layoutConfig.setVisibility(View.GONE);
+			layoutAlramConfig.setVisibility(View.GONE);
 	}
 
 	public void onClickLoad(View view) {
@@ -102,9 +136,9 @@ public class ConfigActivity extends Activity {
 				+ "&resources="
 				+ resources
 				+ "&firstDate="
-				+ etDateStart.getText()
+				+ DateFormater.dateToURLString(startYear, endMounth, startDay)
 				+ "&lastDate="
-				+ etDateEnd.getText()
+				+ DateFormater.dateToURLString(endYear, endMounth, endDay)
 				+ "&projectId=" + projectId;
 
 		// AsynkTask pour le téléchargement
@@ -137,7 +171,7 @@ public class ConfigActivity extends Activity {
 						+ " Heures");
 				Log.v("Event description", event.getDescription());
 			}
-			showToast("Done !");
+			showToast("Ouverture terminée !");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -166,8 +200,8 @@ public class ConfigActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			this.dialog.setTitle("Please wait");
-			this.dialog.setMessage("Downloading...");
+			this.dialog.setTitle(getResources().getString(R.string.dialog_download_title));
+			this.dialog.setMessage(getResources().getString(R.string.dialog_download_msg));
 			this.dialog.show();
 		}
 
@@ -178,7 +212,7 @@ public class ConfigActivity extends Activity {
 			}
 
 			if (success) {
-				activity.openICSFile();
+				activity.showToast(getResources().getString(R.string.dialog_download_toast));
 			}
 		}
 
