@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp" >
+    android:padding="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,18 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="@string/default_event_name"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_event_separator"/>
+            android:text="@string/event_name"/>
 
         <TextView
             android:id="@+id/event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_event_date"/>
+            android:text="@string/event_date"/>
     </LinearLayout>
 
     <LinearLayout
@@ -38,18 +35,13 @@
             android:id="@+id/event_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_event_start"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_event_separator"/>
+            android:text="@string/event_start"/>
 
         <TextView
             android:id="@+id/event_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_event_end"/>
+            android:text="@string/event_end"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,12 +1,11 @@
 <resources>
 
     <string name="title_activity_agenda">ADE Agenda</string>
-	<string name="error_fnf">Impossible de lire le fichier "%s"</string>
-    <string name="empty_agenda">Aucun évènement</string>
-	<string name="default_event_name">ACO CM</string>
-	<string name="default_event_date">21/12/12</string>
-	<string name="default_event_start">11:00</string>
-	<string name="default_event_end">12:00</string>
-	<string name="default_event_separator"> - </string>
+	<string name="error_fnf">Impossible de lire le fichier "%1$s"</string>
+    <string name="empty_agenda">Veuillez patienter</string>
+	<string name="event_name">ACO CM &#160;</string>
+	<string name="event_date">21/12/12</string>
+	<string name="event_start">de %1$s &#160;</string>
+	<string name="event_end">à %1$s</string>
     
 </resources>

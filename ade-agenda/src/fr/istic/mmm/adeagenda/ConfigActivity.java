@@ -47,13 +47,13 @@ public class ConfigActivity extends Activity {
 				startYear = year;
 				startMounth = monthOfYear;
 				startDay = dayOfMonth;
-				etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+				etDateStart.setText(DateFormater.dateToDisplayString(ConfigActivity.this, startYear,
 						startMounth, startDay));
 			} else if (view == findViewById(R.id.editText_date_end)) {
 				endYear = year;
 				endMounth = monthOfYear;
 				endDay = dayOfMonth;
-				etDateEnd.setText(DateFormater.dateToDisplayString(endYear,
+				etDateEnd.setText(DateFormater.dateToDisplayString(ConfigActivity.this, endYear,
 						endMounth, endDay));
 			}
 		}
@@ -79,11 +79,11 @@ public class ConfigActivity extends Activity {
 
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
-		etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+		etDateStart.setText(DateFormater.dateToDisplayString(this, startYear,
 				startMounth, startDay));
 
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
-		etDateEnd.setText(DateFormater.dateToDisplayString(endYear, endMounth,
+		etDateEnd.setText(DateFormater.dateToDisplayString(this, endYear, endMounth,
 				endDay));
 
 		dialogDateStart = new DatePickerDialog(this, mDateSetListener,
@@ -231,12 +231,6 @@ public class ConfigActivity extends Activity {
 				android.util.Log.e(TAG, "error", e);
 				return false;
 			}
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			super.onProgressUpdate(values);
 		}
 	}
 

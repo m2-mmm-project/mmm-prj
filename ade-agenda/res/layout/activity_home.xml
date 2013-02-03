@@ -22,18 +22,18 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/btn_config"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_config"
-            android:onClick="onClickConfig" />
-
-        <Button
             android:id="@+id/btn_agenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_agenda"
             android:onClick="onClickAgenda" />
+        
+        <Button
+            android:id="@+id/btn_config"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_config"
+            android:onClick="onClickConfig" />
 
         <Button
             android:id="@+id/btn_map"

@@ -3,7 +3,7 @@ package fr.istic.mmm.adeagenda.utils;
 import java.util.Calendar;
 import java.util.Date;
 
-import fr.istic.mmm.adeagenda.MainActivity;
+import android.content.Context;
 import fr.istic.mmm.adeagenda.R;
 
 public class DateFormater {
@@ -27,11 +27,11 @@ public class DateFormater {
 		return date_str;
 	}
 
-	public static String dateToDisplayString(int year, int month, int day) {
+	public static String dateToDisplayString(Context context, int year, int month, int day) {
 
 		return day
 				+ " "
-				+ MainActivity.getAppContext().getResources().getStringArray(R.array.french_month)[month]
+				+ context.getResources().getStringArray(R.array.french_month)[month]
 				+ " " + year;
 	}
 
