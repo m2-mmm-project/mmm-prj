@@ -3,10 +3,13 @@ package fr.istic.mmm.adeagenda;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
+import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
 public class HomeActivity extends SherlockActivity {
@@ -20,8 +23,16 @@ public class HomeActivity extends SherlockActivity {
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
 		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE, false);
 		
+		// Mise en place du service de mise a jour du fichier ics
+		startService(new Intent(getApplicationContext(), UpdateService.class));
+		
 		if(!configIsDone){
-			startActivity(new Intent(getApplicationContext(), ConfigActivity.class));
+			Log.v("HomeActivity", "Config not done");
+//			startActivity(new Intent(getApplicationContext(), ConfigActivity.class));
+			Toast.makeText(getApplicationContext(), "Vous devriez configurer votre agenda", Toast.LENGTH_LONG).show();
+		}
+		else{
+			Toast.makeText(getApplicationContext(), "Config ok", Toast.LENGTH_SHORT).show();
 		}
 		
 	}

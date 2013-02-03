@@ -12,8 +12,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -36,7 +38,7 @@ public class ConfigActivity extends Activity {
 
 	
 	private int projectId;
-	private int[] resources;
+	private String resources;
 	private int startYear;
 	private int startMounth;
 	private int startDay;
@@ -119,48 +121,24 @@ public class ConfigActivity extends Activity {
 		}
 	}
 
-	public void onClickLoad(View view) {
-		// Création de l'URL avec les bons paramètres
-		String resources = "129";
-		String calType = "ical";
-		String login = "cal";
-		String password = "visu";
-		String projectId = "31";
-
-		String cal_url = "http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType="
-				+ calType
-				+ "&login="
-				+ login
-				+ "&password="
-				+ password
-				+ "&resources="
-				+ resources
-				+ "&firstDate="
-				+ DateFormater.dateToURLString(startYear, startMounth, startDay)
-				+ "&lastDate="
-				+ DateFormater.dateToURLString(endYear, endMounth, endDay)
-				+ "&projectId=" + projectId;
-
-		// AsynkTask pour le téléchargement
-		try {
-			ProgressTask progressTask = new ProgressTask();
-			progressTask.execute(new URL(cal_url));
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void onClickValidate(View view) {
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
-		settings.edit().putBoolean(Config.PREF_CONFIG_DONE, true);
-		settings.edit().putInt(Config.PREF_PROJECT_ID, 31);
-		settings.edit().putString(Config.PREF_RESOURCES_ID, "0");
-		settings.edit().putString(Config.PREF_LOGIN, "cal");
-		settings.edit().putString(Config.PREF_PASSWORD, "visu");
-		settings.edit().putString(Config.PREF_START_DATE, DateFormater.dateToURLString(startYear, startMounth, startDay));
-		settings.edit().putString(Config.PREF_END_DATE, DateFormater.dateToURLString(endYear, endMounth, endDay));
-
+		Editor edit = settings.edit();
+		
+		resources = "129"; // TODO
+		projectId = 31;
+		
+		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
+		edit.putInt(Config.PREF_PROJECT_ID, projectId);
+		edit.putString(Config.PREF_RESOURCES_ID, resources);
+		edit.putString(Config.PREF_LOGIN, "cal");
+		edit.putString(Config.PREF_PASSWORD, "visu");
+		edit.putString(Config.PREF_START_DATE, DateFormater.dateToURLString(startYear, startMounth, startDay));
+		edit.putString(Config.PREF_END_DATE, DateFormater.dateToURLString(endYear, endMounth, endDay));
+		edit.apply();
+		
+		Log.v("Config done", "Settings saved");
 		this.finish();
 	}
 
@@ -172,77 +150,4 @@ public class ConfigActivity extends Activity {
 			}
 		});
 	}
-
-	// AsyncTask pour le téléchargement du fichier ICS
-	private class ProgressTask extends AsyncTask<URL, Integer, Boolean> {
-
-		private ProgressDialog dialog;
-
-		public ProgressTask() {
-			dialog = new ProgressDialog(ConfigActivity.this);
-		}
-
-		@Override
-		protected void onPreExecute() {
-			dialog.setTitle(getResources().getString(R.string.dialog_download_title));
-			dialog.setMessage(getResources().getString(R.string.dialog_download_msg));
-			dialog.show();
-		}
-
-		@Override
-		protected void onPostExecute(final Boolean success) {
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-			}
-
-			if (success) {
-				showToast(getResources().getString(R.string.dialog_download_toast));
-			}
-		}
-
-		@Override
-		protected Boolean doInBackground(final URL... urls) {
-			try {
-				boolean success = false;
-				
-				// Création du dossier de destination
-				File downloadDir = new File(Config.DOWNLOAD_DIRECTORY);
-				if (!(success = downloadDir.exists())) {
-					if (success = downloadDir.mkdir()) {
-						android.util.Log.d(TAG, "Creating folder "+downloadDir.getAbsolutePath());	
-					} else {
-						android.util.Log.e(TAG, "Creating folder "+downloadDir.getAbsolutePath()+" FAILED");
-						showToast("Opération annulée : problème lors de la sauvegarde");
-						return false;
-					}
-				}
-
-				if (success) {
-					URL url = urls[0];
-					URLConnection uConn = url.openConnection();
-					InputStream is = url.openStream();
-					uConn.connect();
-					// Téléchargement du fichier
-					FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + Config.FILE_NAME);
-
-					byte data[] = new byte[1024];
-					int count = 0;
-					while ((count = is.read(data)) != -1) {
-						destFile.write(data, 0, count);
-					}
-
-					is.close();
-					destFile.close();
-
-					return true;
-				} else {
-					return false;
-				}
-			} catch (Exception e) {
-				android.util.Log.e(TAG, "error", e);
-				return false;
-			}
-		}
-	}
-
 }

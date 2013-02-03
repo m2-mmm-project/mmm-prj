@@ -115,7 +115,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <Spinner
                     android:id="@+id/spinner_alarm_time"
@@ -143,13 +143,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/btn_load"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickLoad"
-            android:text="@string/btn_load_calendar" />
 
         <Button
             android:id="@+id/btn_save"
