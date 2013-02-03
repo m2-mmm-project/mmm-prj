@@ -58,6 +58,6 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		startActivity(new Intent(getApplicationContext(), MyMapActivity.class));
+		startActivity(new Intent(getApplicationContext(), MapActivity.class));
 	}
 }

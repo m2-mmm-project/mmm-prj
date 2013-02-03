@@ -25,7 +25,7 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 
-		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_map))
 				.getMap();
 
 		map.addMarker(new MarkerOptions()
@@ -44,7 +44,7 @@ public class MapActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		getMenuInflater().inflate(R.menu.activity_map, menu);
 		return true;
 	}
 
