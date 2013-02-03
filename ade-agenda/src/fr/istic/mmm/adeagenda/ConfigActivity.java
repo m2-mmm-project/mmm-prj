@@ -220,36 +220,36 @@ public class ConfigActivity extends Activity {
 		protected Boolean doInBackground(final URL... urls) {
 			try {
 				// Création du dossier de destination
-				File downloadDirectory = new File(DOWNLOAD_DIRECTORY);
-				if (!downloadDirectory.exists()) {
-					Log.v("Calendar", "Création dossier ...");
-					if (downloadDirectory.mkdir()) {
-						Log.v("Calendar", "Création dossier ok");
+
+				File downloadDir = new File(DOWNLOAD_DIRECTORY);
+				boolean success = true;
+				if (!downloadDir.exists()) {
+					success = downloadDir.mkdir();
+				}
+				if (success) {
+					URL url = urls[0];
+					URLConnection conexion = url.openConnection();
+					InputStream is = url.openStream();
+					conexion.connect();
+
+					// Téléchargement du fichier
+					FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + ICS_FILE_NAME);
+
+					byte data[] = new byte[1024];
+					int count = 0;
+					while ((count = is.read(data)) != -1) {
+						destFile.write(data, 0, count);
 					}
-					Log.v("Calendar", downloadDirectory.getAbsolutePath());
+
+					is.close();
+					destFile.close();
+
+					return true;
+				} else {
+					return false;
 				}
-
-				URL url = urls[0];
-				URLConnection conexion = url.openConnection();
-				InputStream is = url.openStream();
-				conexion.connect();
-
-				// Téléchargement du fichier
-				FileOutputStream destFile = new FileOutputStream(
-						downloadDirectory + "/" + ICS_FILE_NAME);
-
-				byte data[] = new byte[1024];
-				int count = 0;
-				while ((count = is.read(data)) != -1) {
-					destFile.write(data, 0, count);
-				}
-
-				is.close();
-				destFile.close();
-
-				return true;
 			} catch (Exception e) {
-				Log.e("tag", "error", e);
+				Log.e("WTF?", "error", e);
 				return false;
 			}
 		}
