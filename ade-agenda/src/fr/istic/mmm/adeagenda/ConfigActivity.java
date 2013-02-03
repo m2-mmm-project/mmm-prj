@@ -44,7 +44,7 @@ public class ConfigActivity extends Activity {
 			startYear = year;
 			startMounth = monthOfYear;
 			startDay = dayOfMonth;
-			etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+			etDateStart.setText(DateFormater.getDisplayString(startYear,
 					startMounth, startDay));
 
 		}
@@ -55,8 +55,8 @@ public class ConfigActivity extends Activity {
 			endYear = year;
 			endMounth = monthOfYear;
 			endDay = dayOfMonth;
-			etDateEnd.setText(DateFormater.dateToDisplayString(endYear,
-					endMounth, endDay));
+			etDateEnd.setText(DateFormater.getDisplayString(endYear, endMounth,
+					endDay));
 
 		}
 	};
@@ -66,26 +66,40 @@ public class ConfigActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_config);
 
-		startYear = Calendar.getInstance().get(Calendar.YEAR);
-		startMounth = Calendar.SEPTEMBER;
-		startDay = 1;
+		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
+		String firstDate = settings.getString(Config.PREF_START_DATE, "");
+		String lastDate = settings.getString(Config.PREF_END_DATE, "");
 
-		endYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
-		endMounth = Calendar.SEPTEMBER;
-		endDay = 30;
+		if (firstDate != "" && lastDate != "") {
+			startYear = Integer.parseInt(firstDate.substring(0, 4));
+			startMounth = Integer.parseInt(firstDate.substring(5, 7))-1;
+			startDay = Integer.parseInt(firstDate.substring(8, 10));
 
-		if (Calendar.getInstance().get(Calendar.MONTH) < Calendar.AUGUST) {
-			startYear--;
-			endYear--;
+			endYear = Integer.parseInt(lastDate.substring(0, 4));
+			endMounth = Integer.parseInt(lastDate.substring(5, 7))-1;
+			endDay = Integer.parseInt(lastDate.substring(8, 10));
+		} else {
+			startYear = Calendar.getInstance().get(Calendar.YEAR);
+			startMounth = Calendar.SEPTEMBER;
+			startDay = 1;
+
+			endYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
+			endMounth = Calendar.SEPTEMBER;
+			endDay = 30;
+
+			if (Calendar.getInstance().get(Calendar.MONTH) < Calendar.AUGUST) {
+				startYear--;
+				endYear--;
+			}
 		}
 
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
-		etDateStart.setText(DateFormater.dateToDisplayString(startYear,
+		etDateStart.setText(DateFormater.getDisplayString(startYear,
 				startMounth, startDay));
 
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
-		etDateEnd.setText(DateFormater.dateToDisplayString(endYear, endMounth,
+		etDateEnd.setText(DateFormater.getDisplayString(endYear, endMounth,
 				endDay));
 
 		dialogDateStart = new DatePickerDialog(this, mStartDateSetListener,
@@ -131,9 +145,9 @@ public class ConfigActivity extends Activity {
 		edit.putString(Config.PREF_LOGIN, "cal");
 		edit.putString(Config.PREF_PASSWORD, "visu");
 		edit.putString(Config.PREF_START_DATE,
-				DateFormater.dateToURLString(startYear, startMounth, startDay));
+				DateFormater.getURLString(startYear, startMounth, startDay));
 		edit.putString(Config.PREF_END_DATE,
-				DateFormater.dateToURLString(endYear, endMounth, endDay));
+				DateFormater.getURLString(endYear, endMounth, endDay));
 		edit.apply();
 
 		Log.v("Config done", "Settings saved");

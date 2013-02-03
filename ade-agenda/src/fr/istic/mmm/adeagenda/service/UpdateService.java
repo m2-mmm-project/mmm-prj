@@ -46,8 +46,8 @@ public class UpdateService extends Service {
 		resources = settings.getString(Config.PREF_RESOURCES_ID, "239");
 		login = settings.getString(Config.PREF_LOGIN, "cal");
 		password = settings.getString(Config.PREF_PASSWORD, "visu");
-		firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.dateToURLString(1999, 12, 31));
-		lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.dateToURLString(2000, 12, 31));
+		firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getURLString(1999, 11, 31));
+		lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getURLString(2000, 11, 31));
 
 		
 		final Handler handler = new Handler();
@@ -96,8 +96,8 @@ public class UpdateService extends Service {
 			resources = settings.getString(Config.PREF_RESOURCES_ID, "129");
 			login = settings.getString(Config.PREF_LOGIN, "cal");
 			password = settings.getString(Config.PREF_PASSWORD, "visu");
-			firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.dateToURLString(1999, 12, 31));
-			lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.dateToURLString(2000, 12, 31));
+			firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getURLString(1999, 12, 31));
+			lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getURLString(2000, 12, 31));
 
 			final String cal_url = "http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType="
 					+ calType
