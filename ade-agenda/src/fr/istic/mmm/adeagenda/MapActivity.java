@@ -1,6 +1,5 @@
 package fr.istic.mmm.adeagenda;
 
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -25,11 +24,10 @@ public class MapActivity extends FragmentActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-		
-		map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(
-				R.id.fragment_map)).getMap();
-		
-		// Move the camera instantly to the point with a zoom of 15.
+
+		map = ((SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.fragment_map)).getMap();
+
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER_ISTIC, 18));
 
 		// Add a marker if the bundle contains a position
@@ -43,8 +41,7 @@ public class MapActivity extends FragmentActivity {
 			double posLng = getIntent().getDoubleExtra(Config.MAP_POSITION_LNG,
 					0);
 			map.addMarker(new MarkerOptions()
-					.position(new LatLng(posLat, posLng))
-					.title("02B - E007")
+					.position(new LatLng(posLat, posLng)).title("02B - E007")
 					.snippet("Salle de TP"));
 		}
 

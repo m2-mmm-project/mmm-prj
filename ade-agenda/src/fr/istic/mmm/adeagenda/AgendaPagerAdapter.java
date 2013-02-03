@@ -1,16 +1,14 @@
 package fr.istic.mmm.adeagenda;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class AgendaPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -64,27 +62,27 @@ public class AgendaPagerAdapter extends FragmentStatePagerAdapter {
 	    		
 	    	case 2:
 	    		c.add(Calendar.DAY_OF_YEAR, 2);
-	    		tabName = DateFormater.getDayString(context, c.get(Calendar.DAY_OF_WEEK));
+	    		tabName = DateFormater.getDayString(c);
 	    		break;
 	    		
 	    	case 3:
 	    		c.add(Calendar.DAY_OF_YEAR, 3);
-	    		tabName = DateFormater.getDayString(context, c.get(Calendar.DAY_OF_WEEK));
+	    		tabName = DateFormater.getDayString(c);
 	    		break;
 	    		
 	    	case 4:
 	    		c.add(Calendar.DAY_OF_YEAR, 4);
-	    		tabName = DateFormater.getDayString(context, c.get(Calendar.DAY_OF_WEEK));
+	    		tabName = DateFormater.getDayString(c);
 	    		break;
 	    		
 	    	case 5:
 	    		c.add(Calendar.DAY_OF_YEAR, 5);
-	    		tabName = DateFormater.getDayString(context, c.get(Calendar.DAY_OF_WEEK));
+	    		tabName = DateFormater.getDayString(c);
 	    		break;
 	    		
 	    	case 6:
 	    		c.add(Calendar.DAY_OF_YEAR, 6);
-	    		tabName = DateFormater.getDayString(context, c.get(Calendar.DAY_OF_WEEK));
+	    		tabName = DateFormater.getDayString(c);
 	    		break;
 	    	}
 	    	

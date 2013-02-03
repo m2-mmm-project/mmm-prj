@@ -3,7 +3,6 @@ package fr.istic.mmm.adeagenda.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Timer;
