@@ -20,7 +20,7 @@ import net.fortuna.ical4j.model.component.VEvent;
 import fr.istic.mmm.adeagenda.model.Event;
 
 /**
- * @author Clément Hardouin
+ * @author ClÃ©ment Hardouin
  *
  */
 public class CalendarReader implements ICalendarReader {
@@ -175,8 +175,27 @@ public class CalendarReader implements ICalendarReader {
 	 */
 	@Override
 	public List<Event> eventsOfTheWeek(DateTime date) {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO : Not tested !!
+		java.util.Calendar lastMonday = java.util.Calendar.getInstance();
+		lastMonday.set(java.util.Calendar.DAY_OF_WEEK, 0);
+		lastMonday.set(java.util.Calendar.HOUR_OF_DAY, 0);
+		lastMonday.clear(java.util.Calendar.MINUTE);
+		lastMonday.clear(java.util.Calendar.SECOND);
+		// create a period starting now with a duration of one (1) day..
+		Period period = new Period(new DateTime(lastMonday.getTime()), new Dur(7, 0, 0, 0));
+		Rule rule = new PeriodRule(period);
+		Rule[] rules = { rule };
+		Filter filter = new Filter(rules, Filter.MATCH_ALL);
+
+		Collection<VEvent> col = filter.filter(calendar.getComponents(Component.VEVENT));
+		List<Event> events = new ArrayList<Event>();
+		for (VEvent e : col) {
+			events.add(new Event(e.getSummary().getValue(), e.getStartDate()
+					.getDate(), e.getEndDate().getDate(), e.getLocation()
+					.getValue(), e.getDescription().getValue()));
+		}
+
+		return events;
 	}
 
 	public void example() {

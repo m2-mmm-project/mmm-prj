@@ -222,37 +222,41 @@ public class ConfigActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(final URL... urls) {
 			try {
+				boolean success = false;
+				
 				// Création du dossier de destination
-				File downloadDirectory = new File(DOWNLOAD_DIRECTORY);
-				if (!downloadDirectory.exists()) {
-					if (downloadDirectory.mkdir()) {
-						android.util.Log.d(TAG, "Creating folder "+downloadDirectory.getAbsolutePath());	
+				File downloadDir = new File(DOWNLOAD_DIRECTORY);
+				if (!(success = downloadDir.exists())) {
+					if (success = downloadDir.mkdir()) {
+						android.util.Log.d(TAG, "Creating folder "+downloadDir.getAbsolutePath());	
 					} else {
-						android.util.Log.e(TAG, "Creating folder "+downloadDirectory.getAbsolutePath()+" FAILED");
+						android.util.Log.e(TAG, "Creating folder "+downloadDir.getAbsolutePath()+" FAILED");
 						showToast("Opération annulée : problème lors de la sauvegarde");
 						return false;
 					}
 				}
 
-				URL url = urls[0];
-				URLConnection conexion = url.openConnection();
-				InputStream is = url.openStream();
-				conexion.connect();
+				if (success) {
+					URL url = urls[0];
+					URLConnection uConn = url.openConnection();
+					InputStream is = url.openStream();
+					uConn.connect();
+					// Téléchargement du fichier
+					FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + FILE_NAME);
 
-				// Téléchargement du fichier
-				FileOutputStream destFile = new FileOutputStream(
-						downloadDirectory + "/" + FILE_NAME);
-				
-				byte data[] = new byte[1024];
-				int count = 0;
-				while ((count = is.read(data)) != -1) {
-					destFile.write(data, 0, count);
+					byte data[] = new byte[1024];
+					int count = 0;
+					while ((count = is.read(data)) != -1) {
+						destFile.write(data, 0, count);
+					}
+
+					is.close();
+					destFile.close();
+
+					return true;
+				} else {
+					return false;
 				}
-
-				is.close();
-				destFile.close();
-
-				return true;
 			} catch (Exception e) {
 				android.util.Log.e(TAG, "error", e);
 				return false;
