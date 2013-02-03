@@ -18,4 +18,8 @@ public abstract class Config {
 	public static final String FILE_NAME = "ADECal.ics";
 	public static final String DOWNLOAD_DIRECTORY = Environment
 			.getExternalStorageDirectory().getAbsolutePath() + "/ADECalendar";
+	
+	// Noms des paramètres des Bundles
+	public static final String MAP_POSITION_LAT = "positionLat";
+	public static final String MAP_POSITION_LNG = "positionLng";
 }

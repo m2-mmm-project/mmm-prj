@@ -58,6 +58,9 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		startActivity(new Intent(getApplicationContext(), MapActivity.class));
+		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+		intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
+		intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
+		startActivity(intent);
 	}
 }
