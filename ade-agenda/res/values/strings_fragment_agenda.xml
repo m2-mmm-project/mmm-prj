@@ -1,0 +1,21 @@
+<resources>
+
+    <string name="title_activity_agenda">ADE Agenda</string>
+	<string name="error_fnf">Impossible de lire le fichier "%1$s"</string>
+	<string name="please_wait">Veuillez patienter</string>
+    <string name="empty_agenda">Aucun évènement</string>
+	<string name="event_name">ACO CM &#160;</string>
+	<string name="event_date">21/12/12</string>
+	<string name="event_start">de %1$s &#160;</string>
+	<string name="event_end">à %1$s</string>
+    
+	<string name="today">Aujourd\'hui</string>
+	<string name="tomorrow">Demain</string>
+	<string name="monday">Lundi</string>
+	<string name="tuesday">Mardi</string>
+	<string name="wednesday">Mercredi</string>
+	<string name="thursday">Jeudi</string>
+	<string name="friday">Vendredi</string>
+	<string name="saturday">Samedi</string>
+	<string name="sunday">Dimanche</string>
+</resources>

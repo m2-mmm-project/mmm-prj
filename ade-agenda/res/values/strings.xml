@@ -32,5 +32,6 @@
     </string-array>
 
     <string name="title_activity_agenda">Mon Agenda</string>
+    <string name="title_activity_agenda_pager">Mon agenda</string>
 
 </resources>

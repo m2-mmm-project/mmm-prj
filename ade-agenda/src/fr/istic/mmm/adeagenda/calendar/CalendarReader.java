@@ -150,7 +150,7 @@ public class CalendarReader implements ICalendarReader {
 	@Override
 	public List<Event> eventsOfTheDay(DateTime date) {
 		// create a period starting now with a duration of one (1) day..
-		Period period = new Period(date, new Dur(1, 0, 0, 0));
+		Period period = new Period(date, new Dur(0, 24, 0, 0));
 		Rule rule = new PeriodRule(period);
 		Rule[] rules = { rule };
 		Filter filter = new Filter(rules, Filter.MATCH_ALL);
@@ -197,17 +197,4 @@ public class CalendarReader implements ICalendarReader {
 
 		return events;
 	}
-
-	public void example() {
-		/*
-		 * VEvent event = (VEvent)calendar.getComponents().get(0);
-		 * 
-		 * event.getSummary(); event.getDescription();
-		 * 
-		 * event.getStartDate(); event.getEndDate(); event.getDuration();
-		 * 
-		 * event.getLocation(); event.getGeographicPos();
-		 */
-	}
-
 }

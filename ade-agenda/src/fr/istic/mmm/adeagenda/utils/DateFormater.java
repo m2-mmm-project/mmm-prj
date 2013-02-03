@@ -27,7 +27,8 @@ public class DateFormater {
 		return date_str;
 	}
 
-	public static String dateToDisplayString(Context context, int year, int month, int day) {
+	public static String dateToDisplayString(Context context, int year,
+			int month, int day) {
 
 		return day
 				+ " "
@@ -37,5 +38,25 @@ public class DateFormater {
 
 	public static String dateToString(Date date) {
 		return date.toString();
+	}
+
+	public static final String getDayString(Context context, int day) {
+		switch (day) {
+			case Calendar.SUNDAY:
+				return context.getString(R.string.sunday);
+			case Calendar.MONDAY:
+				return context.getString(R.string.monday);
+			case Calendar.TUESDAY:
+				return context.getString(R.string.tuesday);
+			case Calendar.WEDNESDAY:
+				return context.getString(R.string.wednesday);
+			case Calendar.THURSDAY:
+				return context.getString(R.string.thursday);
+			case Calendar.FRIDAY:
+				return context.getString(R.string.friday);
+			case Calendar.SATURDAY:
+				return context.getString(R.string.saturday);
+		}
+		return "";
 	}
 }

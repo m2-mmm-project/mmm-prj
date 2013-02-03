@@ -27,7 +27,7 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		startActivity(new Intent(getApplicationContext(), AgendaActivity.class));
+		startActivity(new Intent(getApplicationContext(), AgendaPagerActivity.class));
 	}
 	
 	/**
