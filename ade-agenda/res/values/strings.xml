@@ -9,7 +9,7 @@
     <string name="title_activity_config">ConfigActivity</string>
     <string name="title_activity_map">Carte de la FAC</string>
     <string name="load_calendar">Load from the internet</string>
-    
+
     <string-array name="french_month">
         <item>Janvier</item>
         <item>Févier</item>
@@ -24,12 +24,13 @@
         <item>Novembre</item>
         <item>Décembre</item>
     </string-array>
-    
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
         <item>Earth</item>
         <item>Mars</item>
     </string-array>
+
+    <string name="title_activity_agenda">Mon Agenda</string>
 
 </resources>

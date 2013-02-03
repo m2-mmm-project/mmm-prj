@@ -34,7 +34,6 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -50,7 +49,10 @@
             android:name="fr.istic.mmm.adeagenda.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
-
+        <activity
+            android:name="fr.istic.mmm.adeagenda.AgendaActivity"
+            android:label="@string/title_activity_agenda" >
+        </activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCgZ1iAsEQIqiVZRBd72Q77Mt6bhoitlhk" />

@@ -34,8 +34,8 @@
 	<string name="btn_load_calendar">Load from the internet</string>
 	<string name="btn_save">Enregistrer</string>
 	
-	<string name="dialog_download_title">Please wait !</string>
-	<string name="dialog_download_msg">Téléchargement in progress...\ndepuis l\'ENT.......</string>
+	<string name="dialog_download_title">Veuillez patienter</string>
+	<string name="dialog_download_msg">Téléchargement en cours...</string>
 	<string name="dialog_download_toast">Téléchargement terminé :)</string>
 	
 	

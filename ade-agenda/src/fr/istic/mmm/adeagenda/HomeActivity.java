@@ -3,6 +3,7 @@ package fr.istic.mmm.adeagenda;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -14,14 +15,27 @@ public class HomeActivity extends SherlockActivity {
 		setContentView(R.layout.activity_home);
 	}
 	
+	/**
+	 * Called when Config btn is clicked
+	 * @param view
+	 */
 	public void onClickConfig(View view) {
 		startActivity(new Intent(getApplicationContext(), ConfigActivity.class));
 	}
 	
+	/**
+	 * Called when Agenda btn is clicked
+	 * @param view
+	 */
 	public void onClickAgenda(View view) {
 		// TODO : Faire un truc
+		Toast.makeText(getApplicationContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
 	}
 	
+	/**
+	 * Called when Map btn is clicked
+	 * @param view
+	 */
 	public void onClickMap(View view) {
 		startActivity(new Intent(getApplicationContext(), MapActivity.class));
 	}

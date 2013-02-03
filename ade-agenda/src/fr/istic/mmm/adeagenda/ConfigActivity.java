@@ -17,12 +17,11 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.model.Event;
@@ -30,7 +29,9 @@ import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class ConfigActivity extends Activity {
 
-	public static final String ICS_FILE_NAME = "ADECal.ics";
+	private static final String TAG = ConfigActivity.class.getSimpleName();
+	
+	public static final String FILE_NAME = "ADECal.ics";
 	public static final String DOWNLOAD_DIRECTORY = Environment
 			.getExternalStorageDirectory().getAbsolutePath() + "/ADECalendar";
 
@@ -39,6 +40,7 @@ public class ConfigActivity extends Activity {
 
 	private DatePickerDialog dialogDateStart;
 	private DatePickerDialog dialogDateEnd;
+	private Spinner spinnerAlarmTime, spinnerAlarmRecurrence;
 
 	private int startYear;
 	private int startMounth;
@@ -49,8 +51,7 @@ public class ConfigActivity extends Activity {
 
 	// DialogPicker Callback
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-		public void onDateSet(DatePicker view, int year, int monthOfYear,
-				int dayOfMonth) {
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			if (view == findViewById(R.id.editText_date_start)) {
 				startYear = year;
 				startMounth = monthOfYear;
@@ -66,8 +67,6 @@ public class ConfigActivity extends Activity {
 			}
 		}
 	};
-
-	private RelativeLayout layoutAlramConfig;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +100,10 @@ public class ConfigActivity extends Activity {
 		dialogDateEnd = new DatePickerDialog(this, mDateSetListener, endYear,
 				endMounth, endDay);
 
-		layoutAlramConfig = (RelativeLayout) findViewById(R.id.layout_alarm_config);
+		spinnerAlarmTime = (Spinner) findViewById(R.id.spinner_alarm_time);
+		spinnerAlarmRecurrence = (Spinner) findViewById(R.id.spinner_alarm_recurence);
+		spinnerAlarmTime.setEnabled(false);
+		spinnerAlarmRecurrence.setEnabled(false);
 	}
 
 	public void onClickDateStart(View view) {
@@ -113,10 +115,13 @@ public class ConfigActivity extends Activity {
 	}
 
 	public void onClickCheckBoxAlarm(View view) {
-		if (((CheckBox) view).isChecked())
-			layoutAlramConfig.setVisibility(View.VISIBLE);
-		else
-			layoutAlramConfig.setVisibility(View.GONE);
+		if (((CheckBox) view).isChecked()) {
+			spinnerAlarmTime.setEnabled(true);
+			spinnerAlarmRecurrence.setEnabled(true);	
+		} else {
+			spinnerAlarmTime.setEnabled(false);
+			spinnerAlarmRecurrence.setEnabled(false);
+		}
 	}
 
 	public void onClickLoad(View view) {
@@ -143,7 +148,8 @@ public class ConfigActivity extends Activity {
 
 		// AsynkTask pour le téléchargement
 		try {
-			new ProgressTask(this).execute(new URL(cal_url));
+			ProgressTask progressTask = new ProgressTask();
+			progressTask.execute(new URL(cal_url));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -160,16 +166,16 @@ public class ConfigActivity extends Activity {
 		// Chargement fichier ics
 		InputStream in;
 		try {
-			in = new FileInputStream(DOWNLOAD_DIRECTORY + "/" + ICS_FILE_NAME);
+			in = new FileInputStream(DOWNLOAD_DIRECTORY + "/" + FILE_NAME);
 			CalendarReader reader = new CalendarReader(in);
 			List<Event> events = reader.eventsOfTheDay();
 
 			for (Event event : events) {
-				Log.v("Event name", "[" + event.getName() + "]");
-				Log.v("Event date", DateFormater.dateToString(event.getStart())
+				android.util.Log.d(TAG, "[" + event.getName() + "]");
+				android.util.Log.d(TAG, DateFormater.dateToString(event.getStart())
 						+ " - " + (event.getDuration() / (1000 * 60 * 60))
 						+ " Heures");
-				Log.v("Event description", event.getDescription());
+				android.util.Log.d(TAG, event.getDescription());
 			}
 			showToast("Ouverture terminée !");
 		} catch (FileNotFoundException e) {
@@ -177,32 +183,29 @@ public class ConfigActivity extends Activity {
 		}
 	}
 
-	public void showToast(final String toast) {
+	public void showToast(final String message) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				Log.v("Toast", toast);
-				Toast.makeText(ConfigActivity.this, toast, Toast.LENGTH_SHORT)
-						.show();
+				android.util.Log.d(TAG, message);
+				Toast.makeText(ConfigActivity.this, message, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
 
 	// AsyncTask pour le téléchargement du fichier ICS
-	private class ProgressTask extends AsyncTask<URL, Void, Boolean> {
+	private class ProgressTask extends AsyncTask<URL, Integer, Boolean> {
 
 		private ProgressDialog dialog;
-		private ConfigActivity activity;
 
-		public ProgressTask(ConfigActivity activity) {
-			this.activity = activity;
-			dialog = new ProgressDialog(activity);
+		public ProgressTask() {
+			dialog = new ProgressDialog(ConfigActivity.this);
 		}
 
 		@Override
 		protected void onPreExecute() {
-			this.dialog.setTitle(getResources().getString(R.string.dialog_download_title));
-			this.dialog.setMessage(getResources().getString(R.string.dialog_download_msg));
-			this.dialog.show();
+			dialog.setTitle(getResources().getString(R.string.dialog_download_title));
+			dialog.setMessage(getResources().getString(R.string.dialog_download_msg));
+			dialog.show();
 		}
 
 		@Override
@@ -212,7 +215,7 @@ public class ConfigActivity extends Activity {
 			}
 
 			if (success) {
-				activity.showToast(getResources().getString(R.string.dialog_download_toast));
+				showToast(getResources().getString(R.string.dialog_download_toast));
 			}
 		}
 
@@ -222,11 +225,13 @@ public class ConfigActivity extends Activity {
 				// Création du dossier de destination
 				File downloadDirectory = new File(DOWNLOAD_DIRECTORY);
 				if (!downloadDirectory.exists()) {
-					Log.v("Calendar", "Création dossier ...");
 					if (downloadDirectory.mkdir()) {
-						Log.v("Calendar", "Création dossier ok");
+						android.util.Log.d(TAG, "Creating folder "+downloadDirectory.getAbsolutePath());	
+					} else {
+						android.util.Log.e(TAG, "Creating folder "+downloadDirectory.getAbsolutePath()+" FAILED");
+						showToast("Opération annulée : problème lors de la sauvegarde");
+						return false;
 					}
-					Log.v("Calendar", downloadDirectory.getAbsolutePath());
 				}
 
 				URL url = urls[0];
@@ -236,8 +241,8 @@ public class ConfigActivity extends Activity {
 
 				// Téléchargement du fichier
 				FileOutputStream destFile = new FileOutputStream(
-						downloadDirectory + "/" + ICS_FILE_NAME);
-
+						downloadDirectory + "/" + FILE_NAME);
+				
 				byte data[] = new byte[1024];
 				int count = 0;
 				while ((count = is.read(data)) != -1) {
@@ -249,11 +254,16 @@ public class ConfigActivity extends Activity {
 
 				return true;
 			} catch (Exception e) {
-				Log.e("tag", "error", e);
+				android.util.Log.e(TAG, "error", e);
 				return false;
 			}
 		}
 
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
+		}
 	}
 
 }
