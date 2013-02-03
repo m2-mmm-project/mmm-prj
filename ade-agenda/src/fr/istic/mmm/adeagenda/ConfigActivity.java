@@ -11,6 +11,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,9 @@ public class ConfigActivity extends Activity {
 	private DatePickerDialog dialogDateEnd;
 	private Spinner spinnerAlarmTime, spinnerAlarmRecurrence;
 
+	
+	private int projectId;
+	private int[] resources;
 	private int startYear;
 	private int startMounth;
 	private int startDay;
@@ -132,7 +136,7 @@ public class ConfigActivity extends Activity {
 				+ "&resources="
 				+ resources
 				+ "&firstDate="
-				+ DateFormater.dateToURLString(startYear, endMounth, startDay)
+				+ DateFormater.dateToURLString(startYear, startMounth, startDay)
 				+ "&lastDate="
 				+ DateFormater.dateToURLString(endYear, endMounth, endDay)
 				+ "&projectId=" + projectId;
@@ -147,8 +151,15 @@ public class ConfigActivity extends Activity {
 	}
 
 	public void onClickValidate(View view) {
-		// Enregistrer les modifications
-		// TODO
+
+		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
+		settings.edit().putBoolean(Config.PREF_CONFIG_DONE, true);
+		settings.edit().putInt(Config.PREF_PROJECT_ID, 31);
+		settings.edit().putString(Config.PREF_RESOURCES_ID, "0");
+		settings.edit().putString(Config.PREF_LOGIN, "cal");
+		settings.edit().putString(Config.PREF_PASSWORD, "visu");
+		settings.edit().putString(Config.PREF_START_DATE, DateFormater.dateToURLString(startYear, startMounth, startDay));
+		settings.edit().putString(Config.PREF_END_DATE, DateFormater.dateToURLString(endYear, endMounth, endDay));
 
 		this.finish();
 	}
