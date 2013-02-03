@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="title_activity_agenda">ADE Agenda</string>
+	<string name="error_fnf">Impossible de lire le fichier "%s"</string>
+    <string name="empty_agenda">Aucun évènement</string>
+	
+</resources>

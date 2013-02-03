@@ -1,40 +1,31 @@
 package fr.istic.mmm.adeagenda;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import fr.istic.mmm.adeagenda.calendar.CalendarReader;
-import fr.istic.mmm.adeagenda.model.Event;
+import fr.istic.mmm.adeagenda.utils.Config;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class ConfigActivity extends Activity {
 
 	private static final String TAG = ConfigActivity.class.getSimpleName();
 	
-	public static final String FILE_NAME = "ADECal.ics";
-	public static final String DOWNLOAD_DIRECTORY = Environment
-			.getExternalStorageDirectory().getAbsolutePath() + "/ADECalendar";
-
 	private EditText etDateStart;
 	private EditText etDateEnd;
 
@@ -162,27 +153,6 @@ public class ConfigActivity extends Activity {
 		this.finish();
 	}
 
-	public void openICSFile() {
-		// Chargement fichier ics
-		InputStream in;
-		try {
-			in = new FileInputStream(DOWNLOAD_DIRECTORY + "/" + FILE_NAME);
-			CalendarReader reader = new CalendarReader(in);
-			List<Event> events = reader.eventsOfTheDay();
-
-			for (Event event : events) {
-				android.util.Log.d(TAG, "[" + event.getName() + "]");
-				android.util.Log.d(TAG, DateFormater.dateToString(event.getStart())
-						+ " - " + (event.getDuration() / (1000 * 60 * 60))
-						+ " Heures");
-				android.util.Log.d(TAG, event.getDescription());
-			}
-			showToast("Ouverture terminée !");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void showToast(final String message) {
 		runOnUiThread(new Runnable() {
 			public void run() {
@@ -225,7 +195,7 @@ public class ConfigActivity extends Activity {
 				boolean success = false;
 				
 				// Création du dossier de destination
-				File downloadDir = new File(DOWNLOAD_DIRECTORY);
+				File downloadDir = new File(Config.DOWNLOAD_DIRECTORY);
 				if (!(success = downloadDir.exists())) {
 					if (success = downloadDir.mkdir()) {
 						android.util.Log.d(TAG, "Creating folder "+downloadDir.getAbsolutePath());	
@@ -242,7 +212,7 @@ public class ConfigActivity extends Activity {
 					InputStream is = url.openStream();
 					uConn.connect();
 					// Téléchargement du fichier
-					FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + FILE_NAME);
+					FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + Config.FILE_NAME);
 
 					byte data[] = new byte[1024];
 					int count = 0;

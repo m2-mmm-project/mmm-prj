@@ -3,7 +3,6 @@ package fr.istic.mmm.adeagenda;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
@@ -28,8 +27,7 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		// TODO : Faire un truc
-		Toast.makeText(getApplicationContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
+		startActivity(new Intent(getApplicationContext(), AgendaActivity.class));
 	}
 	
 	/**
