@@ -16,8 +16,10 @@
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/event_name"/>
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/event_date"
+            android:text="@string/event_name"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_date"
