@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import fr.istic.mmm.adeagenda.task.DownloadCalendarTask;
 import fr.istic.mmm.adeagenda.utils.Config;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
@@ -139,18 +140,29 @@ public class ConfigActivity extends Activity {
 		resources = "129"; // TODO
 		projectId = 31;
 
+		String firstDate = DateFormater.getURLString(startYear, startMounth, startDay);
+		String lastDate = DateFormater.getURLString(endYear, endMounth, endDay);
+		
+		
 		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
 		edit.putInt(Config.PREF_PROJECT_ID, projectId);
 		edit.putString(Config.PREF_RESOURCES_ID, resources);
 		edit.putString(Config.PREF_LOGIN, "cal");
 		edit.putString(Config.PREF_PASSWORD, "visu");
-		edit.putString(Config.PREF_START_DATE,
-				DateFormater.getURLString(startYear, startMounth, startDay));
-		edit.putString(Config.PREF_END_DATE,
-				DateFormater.getURLString(endYear, endMounth, endDay));
+		edit.putString(Config.PREF_START_DATE, firstDate);
+		edit.putString(Config.PREF_END_DATE, lastDate);
 		edit.apply();
-
 		Log.v("Config done", "Settings saved");
+		
+
+		Log.v("Config done", "Downloading new calendar");
+		try {
+			DownloadCalendarTask progressTask = new DownloadCalendarTask(projectId, resources, "cal", "visu", firstDate, lastDate);
+			progressTask.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		this.finish();
 	}
 
@@ -158,8 +170,7 @@ public class ConfigActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				android.util.Log.d(TAG, message);
-				Toast.makeText(ConfigActivity.this, message, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(ConfigActivity.this, message, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
