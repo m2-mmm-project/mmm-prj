@@ -18,7 +18,6 @@ public class HomeActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
 		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE, false);

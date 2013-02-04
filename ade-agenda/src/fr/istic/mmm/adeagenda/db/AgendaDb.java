@@ -1,21 +1,17 @@
 package fr.istic.mmm.adeagenda.db;
 
-import fr.istic.mmm.adeagenda.model.Event;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import fr.istic.mmm.adeagenda.model.Event;
 
 public class AgendaDb {
 
-	private static final int VERSION = 1;
-	private static final String NAME = "agenda.db";
-	
 	private SQLiteDatabase db;
 	private DbManager manager;
 	
 	public AgendaDb(Context context) {
-		// create the db
-		this.manager = new DbManager(context, NAME, null, VERSION);
+		this.manager = new DbManager(context);
 	}
 	
 	public void open() {
@@ -39,9 +35,9 @@ public class AgendaDb {
 		c.moveToFirst();
 		
 		// getting data from db
-		int id = c.getInt(DbManager.IDX_COL_ID);
-		String name = c.getString(DbManager.IDX_COL_NAME);
-		String place = c.getString(DbManager.IDX_COL_PLACE);
+		int id = c.getInt(DbManager.IDX_COL_RES_ID);
+		String name = c.getString(DbManager.IDX_COL_RES_NAME);
+		String place = c.getString(DbManager.IDX_COL_RES_PLACE);
 		
 		// TODO finir le taff
 		
