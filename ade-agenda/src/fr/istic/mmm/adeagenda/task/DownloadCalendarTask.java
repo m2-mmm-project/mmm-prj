@@ -25,7 +25,7 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	public DownloadCalendarTask(int projectId, String resources, String login, String password, String firstDate, String lastDate) {
 		this.projectId = projectId;
 		this.resources = resources;
-		this.login = resources;
+		this.login = login;
 		this.password = password;
 		this.firstDate = firstDate;
 		this.lastDate = lastDate;
@@ -57,11 +57,9 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 			File downloadDir = new File(Config.DOWNLOAD_DIRECTORY);
 			if (!(success = downloadDir.exists())) {
 				if (success = downloadDir.mkdir()) {
-					android.util.Log.d(TAG, "Creating folder "
-							+ downloadDir.getAbsolutePath());
+					android.util.Log.d(TAG, "Creating folder " + downloadDir.getAbsolutePath());
 				} else {
-					android.util.Log.e(TAG, "Can't create folder "
-							+ downloadDir.getAbsolutePath());
+					android.util.Log.e(TAG, "Can't create folder " + downloadDir.getAbsolutePath());
 					return false;
 				}
 			}
@@ -72,8 +70,7 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 				InputStream is = url.openStream();
 				uConn.connect();
 				// Téléchargement du fichier
-				FileOutputStream destFile = new FileOutputStream(downloadDir
-						+ "/" + Config.FILE_NAME);
+				FileOutputStream destFile = new FileOutputStream(downloadDir + "/" + Config.FILE_NAME);
 
 				byte data[] = new byte[1024];
 				int count = 0;
@@ -84,6 +81,7 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 				is.close();
 				destFile.close();
 
+				Log.v(TAG, "Download complete !");
 				return true;
 			} else {
 				return false;
