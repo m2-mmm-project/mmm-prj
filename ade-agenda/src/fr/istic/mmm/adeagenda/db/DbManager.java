@@ -34,8 +34,8 @@ public class DbManager extends SQLiteOpenHelper {
 			+ TABLE_RESOURCE + " (" + COL_RES_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_RES_NAME
 			+ " TEXT NOT NULL, " + COL_RES_START + " DATE NOT NULL, "
-			+ COL_RES_END + " DATE NOT NULL" + COL_RES_PLACE + " TEXT NOT NULL"
-			+ COL_RES_LAT + " LONG NOT NULL" + COL_RES_LNG + " LONG NOT NULL"
+			+ COL_RES_END + " DATE NOT NULL, " + COL_RES_PLACE + " TEXT NOT NULL, "
+			+ COL_RES_LAT + " LONG NOT NULL, " + COL_RES_LNG + " LONG NOT NULL, "
 			+ COL_RES_DESC + " TEXT);";
 
 	
@@ -54,7 +54,7 @@ public class DbManager extends SQLiteOpenHelper {
 	private static final String CREATE_POS_DB = "CREATE TABLE "
 			+ TABLE_GPSPOSITION + " (" + COL_POS_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_POS_PLACE
-			+ " TEXT NOT NULL, " + COL_RES_LAT + " LONG NOT NULL" + COL_RES_LNG
+			+ " TEXT NOT NULL, " + COL_RES_LAT + " LONG NOT NULL, " + COL_RES_LNG
 			+ " LONG NOT NULL);";
 
 	public DbManager(Context context) {

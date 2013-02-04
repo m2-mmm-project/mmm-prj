@@ -1,5 +1,6 @@
 package fr.istic.mmm.adeagenda.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,10 +37,12 @@ public class GPSPositionDB {
 	 */
 	public LatLng getPositionByName(String name) {
 
+		open();
+
 		Cursor cursor = this.db.query(DbManager.TABLE_GPSPOSITION,
 				fieldsPosition, DbManager.COL_POS_PLACE + "=?",
 				new String[] { name }, null, null, null, null);
-		
+
 		return cursorToLatLng(cursor);
 	}
 
@@ -66,5 +69,18 @@ public class GPSPositionDB {
 		c.close();
 
 		return position;
+	}
+
+	private void add() {
+
+		ContentValues values = new ContentValues();
+		values.put(DbManager.COL_POS_PLACE, "oo");
+		values.put(DbManager.COL_POS_LAT, "1.0");
+		values.put(DbManager.COL_POS_LNG, "2.0");
+
+		// Inserting Row
+		open();
+		db.insert(DbManager.TABLE_GPSPOSITION, null, values);
+		db.close();
 	}
 }

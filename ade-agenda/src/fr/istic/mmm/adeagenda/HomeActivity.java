@@ -20,46 +20,57 @@ public class HomeActivity extends SherlockActivity {
 		setContentView(R.layout.activity_home);
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
-		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE, false);
-		
+		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE,
+				false);
+
 		// Mise en place du service de mise a jour du fichier ics
 		startService(new Intent(getApplicationContext(), UpdateService.class));
-		
-		if(!configIsDone){
+
+		if (!configIsDone) {
 			Log.v("HomeActivity", "Config not done");
-//			startActivity(new Intent(getApplicationContext(), ConfigActivity.class));
-			Toast.makeText(getApplicationContext(), "Vous devriez configurer votre agenda", Toast.LENGTH_LONG).show();
+			// startActivity(new Intent(getApplicationContext(),
+			// ConfigActivity.class));
+			Toast.makeText(getApplicationContext(),
+					"Vous devriez configurer votre agenda", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			Toast.makeText(getApplicationContext(), "Config ok",
+					Toast.LENGTH_SHORT).show();
 		}
-		else{
-			Toast.makeText(getApplicationContext(), "Config ok", Toast.LENGTH_SHORT).show();
-		}
-		
+
 	}
-	
+
 	/**
 	 * Called when Config btn is clicked
+	 * 
 	 * @param view
 	 */
 	public void onClickConfig(View view) {
 		startActivity(new Intent(getApplicationContext(), ConfigActivity.class));
 	}
-	
+
 	/**
 	 * Called when Agenda btn is clicked
+	 * 
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		startActivity(new Intent(getApplicationContext(), AgendaPagerActivity.class));
+		startActivity(new Intent(getApplicationContext(),
+				AgendaPagerActivity.class));
 	}
-	
+
 	/**
 	 * Called when Map btn is clicked
+	 * 
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-		intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
-		intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
-		startActivity(intent);
+//		GPSPositionDB db = new GPSPositionDB(this);
+//		LatLng position = db.getPositionByName("oo");
+		 Intent intent = new Intent(getApplicationContext(),
+		 MapActivity.class);
+		 intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
+		 intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
+		 startActivity(intent);
 	}
 }
