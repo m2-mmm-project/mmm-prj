@@ -1,8 +1,11 @@
 package fr.istic.mmm.adeagenda;
 
 import java.io.File;
+import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import fr.istic.mmm.adeagenda.db.GPSPositionDB;
+import fr.istic.mmm.adeagenda.service.AlarmReceiver;
 import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
@@ -41,6 +45,27 @@ public class HomeActivity extends Activity {
 		}
 	}
 
+	
+	/**
+	 * Called when Config btn is clicked
+	 * 
+	 * @param view
+	 */
+	public void onClickDebug(View view) {
+		Log.v(TAG, "Setting up alarm for notification");
+
+		// get a Calendar object with current time
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, 10);
+
+		Intent intent = new Intent(this, AlarmReceiver.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 13454, intent, 0);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 1000, pendingIntent);
+
+		Log.v(TAG, "Alarm setted");
+	}
+	
 	/**
 	 * Called when Config btn is clicked
 	 * 
