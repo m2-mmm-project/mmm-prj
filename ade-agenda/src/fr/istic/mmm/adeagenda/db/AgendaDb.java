@@ -1,49 +1,129 @@
 package fr.istic.mmm.adeagenda.db;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import fr.istic.mmm.adeagenda.model.Event;
+import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class AgendaDb {
 
 	private SQLiteDatabase db;
 	private DbManager manager;
-	
+
 	public AgendaDb(Context context) {
 		this.manager = new DbManager(context);
 	}
-	
+
 	public void open() {
 		this.db = this.manager.getWritableDatabase();
 	}
-	
+
+	public void reset() {
+		open();
+		db.execSQL("DELETE FROM " + DbManager.TABLE_RESOURCE + ";");
+
+		db.execSQL("DELETE FROM " + DbManager.TABLE_GPSPOSITION + ";");
+		close();
+	}
+
 	public void close() {
 		this.manager.close();
 	}
-	
+
+	/**
+	 * Get event by day
+	 * 
+	 * @param day
+	 *            Day date
+	 * @return List<Event> object
+	 */
+	public List<Event> getEventByDay(Date day) {
+
+		open();
+
+		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
+				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
+						+ ")=date('" + DateFormater.getSQLDayString(day)
+						+ "')", null, null, null, null, null);
+
+		return cursorToEvents(cursor);
+	}
+
+	/**
+	 * Add a event
+	 * 
+	 * @param event
+	 *            Event
+	 */
+	public void add(Event event) {
+
+		ContentValues values = new ContentValues();
+		values.put(DbManager.COL_RES_NAME, event.getName());
+		values.put(DbManager.COL_RES_START,
+				DateFormater.getSQLDateString(event.getStart()));
+		values.put(DbManager.COL_RES_END,
+				DateFormater.getSQLDateString(event.getEnd()));
+		values.put(DbManager.COL_RES_PLACE, event.getPlace());
+		values.put(DbManager.COL_RES_DESC, event.getDescription());
+
+		// Inserting Row
+		open();
+		db.insert(DbManager.TABLE_RESOURCE, null, values);
+		db.close();
+	}
+
 	/**
 	 * Convert a Cursor to a Event object
-	 * @param c cursor
+	 * 
+	 * @param c
+	 *            cursor
 	 * @return Event object
 	 */
-	private Event cursorToEvent(Cursor c){
-		// no element
-		if (c.getCount() == 0) return null;
-			
+	private Event cursorToEvent(Cursor c) {
+		Event event = null;
+
+		// if cursor contains data
+		if (!c.isNull(DbManager.IDX_COL_RES_NAME)) {
+			// getting data from db
+			event = new Event(c.getString(DbManager.IDX_COL_RES_NAME),
+					DateFormater.getSQLDate(c
+							.getString(DbManager.IDX_COL_RES_START)),
+					DateFormater.getSQLDate(c
+							.getString(DbManager.IDX_COL_RES_END)),
+					c.getString(DbManager.IDX_COL_RES_PLACE),
+					c.getString(DbManager.IDX_COL_RES_DEC));
+		}
+
+		return event;
+	}
+
+	/**
+	 * Convert a Cursor to a List of Event object
+	 * 
+	 * @param c
+	 *            cursor
+	 * @return List<Event> object
+	 */
+	private List<Event> cursorToEvents(Cursor c) {
+		List<Event> events = new ArrayList<Event>();
+
 		// move to first element
-		c.moveToFirst();
-		
-		// getting data from db
-		int id = c.getInt(DbManager.IDX_COL_RES_ID);
-		String name = c.getString(DbManager.IDX_COL_RES_NAME);
-		String place = c.getString(DbManager.IDX_COL_RES_PLACE);
-		
-		// TODO finir le taff
-		
+		if (c.moveToFirst()) {
+			do {
+				// getting data from db
+				events.add(cursorToEvent(c));
+			} while (c.moveToNext());
+		}
+
 		// closing db
 		c.close();
- 
-		return null;
+
+		return events;
 	}
 }

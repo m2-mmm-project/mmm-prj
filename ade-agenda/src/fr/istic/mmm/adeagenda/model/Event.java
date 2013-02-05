@@ -2,6 +2,8 @@ package fr.istic.mmm.adeagenda.model;
 
 import java.util.Date;
 
+import fr.istic.mmm.adeagenda.utils.DateFormater;
+
 public class Event {
 
 	private String name;
@@ -93,6 +95,6 @@ public class Event {
 	
 	@Override
 	public String toString() {
-		return name+" - "+place+" ("+start+", "+end+")";
+		return name+" - "+place+" ("+DateFormater.getSQLDateString(start)+", "+DateFormater.getSQLDateString(end)+")";
 	}
 }

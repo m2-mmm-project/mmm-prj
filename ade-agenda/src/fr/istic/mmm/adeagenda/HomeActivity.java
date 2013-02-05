@@ -60,13 +60,31 @@ public class HomeActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Called when Map btn is clicked
+	 * Called when Map btn is clickedDESC
 	 * 
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-//		GPSPositionDB db = new GPSPositionDB(this);
-//		LatLng position = db.getPositionByName("oo");
+//		AgendaDb db = new AgendaDb(this);
+//		db.reset();
+//		db.add(new Event("name1", DateFormater.getSQLDate("2013-02-04 08:00"), DateFormater.getSQLDate("2013-02-04 10:00"), "place1", "description"));
+//		db.add(new Event("name2", DateFormater.getSQLDate("2013-02-05 08:00"), DateFormater.getSQLDate("2013-02-05 10:00"), "place2", "description"));
+//		db.add(new Event("name3", DateFormater.getSQLDate("2013-02-05 14:00"), DateFormater.getSQLDate("2013-02-05 16:00"), "place3", "description"));
+//		db.add(new Event("name4", DateFormater.getSQLDate("2013-02-06 08:00"), DateFormater.getSQLDate("2013-02-06 10:00"), "place4", "description"));
+//		List<Event> e = db.getEventByDay(new Date());
+//
+//		GPSPositionDB db2 = new GPSPositionDB(this);
+//		db2.add("place1", 1.1, 1.2);
+//		db2.add("place", 2.1, 2.2);
+//		db2.add("place3", 3.1, 3.2);
+//		db2.add("place4", 4.1, 4.2);
+//		
+//		Log.v("oo", "read");
+//		for (Event ev : e) {
+//			Log.v("Event", ev.toString());
+//			Log.v(" Pos", db2.getPositionByName(ev.getPlace()).toString());
+//		}
+
 		 Intent intent = new Intent(getApplicationContext(),
 		 MapActivity.class);
 		 intent.putExtra(Config.MAP_POSITION_LAT,48.115671);

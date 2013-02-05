@@ -7,14 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import fr.istic.mmm.adeagenda.utils.Config;
+
 public class GPSPositionDB {
 
 	private SQLiteDatabase db;
 	private DbManager manager;
-
-	private String[] fieldsPosition = { DbManager.COL_POS_ID,
-			DbManager.COL_POS_PLACE, DbManager.COL_POS_LAT,
-			DbManager.COL_POS_LNG };
 
 	public GPSPositionDB(Context context) {
 		this.manager = new DbManager(context);
@@ -40,10 +38,33 @@ public class GPSPositionDB {
 		open();
 
 		Cursor cursor = this.db.query(DbManager.TABLE_GPSPOSITION,
-				fieldsPosition, DbManager.COL_POS_PLACE + "=?",
+				DbManager.FIELDS_GPSPOSITION, DbManager.COL_POS_PLACE + "=?",
 				new String[] { name }, null, null, null, null);
 
 		return cursorToLatLng(cursor);
+	}
+	
+	/**
+	 * Add a place position
+	 * 
+	 * @param name
+	 *            Name of the place
+	 * @param lat
+	 *            Latitude
+	 * @param lng
+	 *            Longitude
+	 */
+	public void add(String name, double lat, double lng) {
+
+		ContentValues values = new ContentValues();
+		values.put(DbManager.COL_POS_PLACE, name);
+		values.put(DbManager.COL_POS_LAT, lat);
+		values.put(DbManager.COL_POS_LNG, lng);
+
+		// Inserting Row
+		open();
+		db.insert(DbManager.TABLE_GPSPOSITION, null, values);
+		db.close();
 	}
 
 	/**
@@ -54,33 +75,18 @@ public class GPSPositionDB {
 	 * @return LatLng position
 	 */
 	private LatLng cursorToLatLng(Cursor c) {
-		// no element
-		if (c.getCount() == 0)
-			return null;
+		LatLng position = Config.CENTER_ISTIC;
 
 		// move to first element
-		c.moveToFirst();
-
-		// getting data from db
-		LatLng position = new LatLng(c.getDouble(DbManager.IDX_COL_POS_LAT),
-				c.getDouble(DbManager.IDX_COL_POS_LNG));
+		if (c.moveToFirst()) {
+			// getting data from db
+			position = new LatLng(c.getDouble(DbManager.IDX_COL_POS_LAT),
+					c.getDouble(DbManager.IDX_COL_POS_LNG));
+		}
 
 		// closing db
 		c.close();
 
 		return position;
-	}
-
-	private void add() {
-
-		ContentValues values = new ContentValues();
-		values.put(DbManager.COL_POS_PLACE, "oo");
-		values.put(DbManager.COL_POS_LAT, "1.0");
-		values.put(DbManager.COL_POS_LNG, "2.0");
-
-		// Inserting Row
-		open();
-		db.insert(DbManager.TABLE_GPSPOSITION, null, values);
-		db.close();
 	}
 }

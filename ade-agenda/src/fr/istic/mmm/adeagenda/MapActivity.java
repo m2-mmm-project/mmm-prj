@@ -15,8 +15,6 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class MapActivity extends FragmentActivity {
 
-	static final LatLng CENTER_ISTIC = new LatLng(48.115671, -1.63813);
-
 	private GoogleMap map;
 
 	@Override
@@ -28,7 +26,7 @@ public class MapActivity extends FragmentActivity {
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fragment_map)).getMap();
 
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER_ISTIC, 18));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(Config.CENTER_ISTIC, 18));
 
 		// Add a marker if the bundle contains a position
 		if (getIntent().hasExtra(Config.MAP_POSITION_LAT)

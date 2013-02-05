@@ -1,5 +1,7 @@
 package fr.istic.mmm.adeagenda.utils;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.os.Environment;
 
 public abstract class Config {
@@ -22,4 +24,7 @@ public abstract class Config {
 	// Noms des paramètres des Bundles
 	public static final String MAP_POSITION_LAT = "positionLat";
 	public static final String MAP_POSITION_LNG = "positionLng";
+	
+	// Position
+	public static final LatLng CENTER_ISTIC = new LatLng(48.115671, -1.63813);
 }
