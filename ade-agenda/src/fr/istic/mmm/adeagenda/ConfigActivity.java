@@ -32,10 +32,10 @@ public class ConfigActivity extends Activity {
 	private int projectId;
 	private String resources;
 	private int startYear;
-	private int startMounth;
+	private int startMonth;
 	private int startDay;
 	private int endYear;
-	private int endMounth;
+	private int endMonth;
 	private int endDay;
 
 	// DialogPicker Callback
@@ -43,10 +43,10 @@ public class ConfigActivity extends Activity {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
 			startYear = year;
-			startMounth = monthOfYear;
+			startMonth = monthOfYear;
 			startDay = dayOfMonth;
 			etDateStart.setText(DateFormater.getDisplayString(startYear,
-					startMounth, startDay));
+					startMonth, startDay));
 
 		}
 	};
@@ -54,9 +54,9 @@ public class ConfigActivity extends Activity {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
 			endYear = year;
-			endMounth = monthOfYear;
+			endMonth = monthOfYear;
 			endDay = dayOfMonth;
-			etDateEnd.setText(DateFormater.getDisplayString(endYear, endMounth,
+			etDateEnd.setText(DateFormater.getDisplayString(endYear, endMonth,
 					endDay));
 
 		}
@@ -73,19 +73,19 @@ public class ConfigActivity extends Activity {
 
 		if (firstDate != "" && lastDate != "") {
 			startYear = Integer.parseInt(firstDate.substring(0, 4));
-			startMounth = Integer.parseInt(firstDate.substring(5, 7))-1;
+			startMonth = Integer.parseInt(firstDate.substring(5, 7))-1;
 			startDay = Integer.parseInt(firstDate.substring(8, 10));
 
 			endYear = Integer.parseInt(lastDate.substring(0, 4));
-			endMounth = Integer.parseInt(lastDate.substring(5, 7))-1;
+			endMonth = Integer.parseInt(lastDate.substring(5, 7))-1;
 			endDay = Integer.parseInt(lastDate.substring(8, 10));
 		} else {
 			startYear = Calendar.getInstance().get(Calendar.YEAR);
-			startMounth = Calendar.SEPTEMBER;
+			startMonth = Calendar.SEPTEMBER;
 			startDay = 1;
 
 			endYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
-			endMounth = Calendar.SEPTEMBER;
+			endMonth = Calendar.SEPTEMBER;
 			endDay = 30;
 
 			if (Calendar.getInstance().get(Calendar.MONTH) < Calendar.AUGUST) {
@@ -97,16 +97,16 @@ public class ConfigActivity extends Activity {
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
 		etDateStart.setText(DateFormater.getDisplayString(startYear,
-				startMounth, startDay));
+				startMonth, startDay));
 
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
-		etDateEnd.setText(DateFormater.getDisplayString(endYear, endMounth,
+		etDateEnd.setText(DateFormater.getDisplayString(endYear, endMonth,
 				endDay));
 
 		dialogDateStart = new DatePickerDialog(this, mStartDateSetListener,
-				startYear, startMounth, startDay);
+				startYear, startMonth, startDay);
 		dialogDateEnd = new DatePickerDialog(this, mEndDateSetListener,
-				endYear, endMounth, endDay);
+				endYear, endMonth, endDay);
 
 		spinnerAlarmTime = (Spinner) findViewById(R.id.spinner_alarm_time);
 		spinnerAlarmRecurrence = (Spinner) findViewById(R.id.spinner_alarm_recurence);
@@ -139,10 +139,18 @@ public class ConfigActivity extends Activity {
 
 		resources = "129"; // TODO
 		projectId = 31;
-
-		String firstDate = DateFormater.getURLString(startYear, startMounth, startDay);
-		String lastDate = DateFormater.getURLString(endYear, endMounth, endDay);
 		
+		String firstDate;
+		String lastDate;
+		
+		// Switch date if necessary
+		if((startYear > endYear) || (startYear == endYear && startMonth > endMonth) || (startYear == endYear && startMonth == endMonth && startDay > endDay)){
+			firstDate = DateFormater.getURLString(endYear, endMonth, endDay);
+			lastDate = DateFormater.getURLString(startYear, startMonth,	startDay);
+		} else {
+			firstDate = DateFormater.getURLString(startYear, startMonth,startDay);
+			lastDate = DateFormater.getURLString(endYear, endMonth, endDay);
+		}
 		
 		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
 		edit.putInt(Config.PREF_PROJECT_ID, projectId);

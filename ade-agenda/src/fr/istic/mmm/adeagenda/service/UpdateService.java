@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.util.Log;
 import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.task.DownloadCalendarTask;
+import fr.istic.mmm.adeagenda.task.ParseCalendarTask;
 import fr.istic.mmm.adeagenda.utils.Config;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
@@ -20,7 +21,6 @@ public class UpdateService extends Service {
 	
 	private SharedPreferences settings;
 
-	private boolean isConfigDone;
 	private int projectId;
 	private String resources;
 	private String login;
@@ -56,10 +56,13 @@ public class UpdateService extends Service {
 						password = settings.getString(Config.PREF_PASSWORD, "visu");
 						firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getURLString(1999, 11, 31));
 						lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getURLString(2000, 11, 31));
-						
+
 						try {
-							DownloadCalendarTask progressTask = new DownloadCalendarTask(projectId, resources, login, password, firstDate, lastDate);
-							progressTask.execute();
+							DownloadCalendarTask downloadTask = new DownloadCalendarTask(projectId, resources, login, password, firstDate, lastDate);
+							downloadTask.execute();
+							
+							ParseCalendarTask parseTask = new ParseCalendarTask();
+							parseTask.execute();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

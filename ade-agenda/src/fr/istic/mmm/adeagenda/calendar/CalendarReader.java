@@ -19,10 +19,6 @@ import net.fortuna.ical4j.model.Period;
 import net.fortuna.ical4j.model.component.VEvent;
 import fr.istic.mmm.adeagenda.model.Event;
 
-/**
- * @author Clément Hardouin
- *
- */
 public class CalendarReader implements ICalendarReader {
 
 	private Calendar calendar;
@@ -48,12 +44,6 @@ public class CalendarReader implements ICalendarReader {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#getEventAt(net.fortuna.ical4j.model.DateTime)
-	 */
 	@Override
 	public Event getEventAt(DateTime datetime) {
 		// create a period starting now with a duration of one (1) day..
@@ -72,11 +62,7 @@ public class CalendarReader implements ICalendarReader {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#getCurrentEvent()
-	 */
+
 	@Override
 	public Event getCurrentEvent() {
 		java.util.Calendar now = java.util.Calendar.getInstance();
@@ -94,11 +80,6 @@ public class CalendarReader implements ICalendarReader {
 					.getValue(), e.getDescription().getValue());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#allEvents()
-	 */
 	@Override
 	public List<Event> allEvents() {
 
@@ -112,11 +93,7 @@ public class CalendarReader implements ICalendarReader {
 		return events;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheDay()
-	 */
+
 	@Override
 	public List<Event> eventsOfTheDay() {
 		java.util.Calendar today = java.util.Calendar.getInstance();
@@ -140,13 +117,6 @@ public class CalendarReader implements ICalendarReader {
 		return events;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheDay(net.fortuna
-	 * .ical4j.model.DateTime)
-	 */
 	@Override
 	public List<Event> eventsOfTheDay(DateTime date) {
 		// create a period starting now with a duration of one (1) day..
@@ -166,13 +136,6 @@ public class CalendarReader implements ICalendarReader {
 		return events;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.istic.mmm.adeagenda.calendar.ICalendarReader#eventsOfTheWeek(net.fortuna
-	 * .ical4j.model.DateTime)
-	 */
 	@Override
 	public List<Event> eventsOfTheWeek(DateTime date) {
 		//TODO : Not tested !!
