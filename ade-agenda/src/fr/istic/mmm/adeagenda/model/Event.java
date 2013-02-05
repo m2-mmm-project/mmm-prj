@@ -10,7 +10,6 @@ public class Event {
 	private Date start;
 	private Date end;
 	private String place;
-	private GPSPosition position;
 	private String description;
 	
 	/**
@@ -70,14 +69,6 @@ public class Event {
 		this.place = place;
 	}
 	
-	public GPSPosition getPosition() {
-		return this.position;
-	}
-	
-	public void setPosition(GPSPosition pos) {
-		this.position = pos;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -95,6 +86,6 @@ public class Event {
 	
 	@Override
 	public String toString() {
-		return name+" - "+place+" ("+DateFormater.getSQLDateString(start)+", "+DateFormater.getSQLDateString(end)+")";
+		return name+" - "+place+" ("+DateFormater.getDateTimeSQLString(start)+", "+DateFormater.getDateTimeSQLString(end)+")";
 	}
 }

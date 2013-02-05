@@ -23,7 +23,8 @@ public class GPSPositionDB {
 	}
 
 	public void close() {
-		this.manager.close();
+		if (this.db.isOpen())
+			this.manager.close();
 	}
 
 	/**
@@ -41,9 +42,13 @@ public class GPSPositionDB {
 				DbManager.FIELDS_GPSPOSITION, DbManager.COL_POS_PLACE + "=?",
 				new String[] { name }, null, null, null, null);
 
-		return cursorToLatLng(cursor);
+		LatLng position = cursorToLatLng(cursor);
+		
+		close();
+		
+		return position;
 	}
-	
+
 	/**
 	 * Add a place position
 	 * 
@@ -64,7 +69,7 @@ public class GPSPositionDB {
 		// Inserting Row
 		open();
 		db.insert(DbManager.TABLE_GPSPOSITION, null, values);
-		db.close();
+		close();
 	}
 
 	/**
@@ -84,7 +89,7 @@ public class GPSPositionDB {
 					c.getDouble(DbManager.IDX_COL_POS_LNG));
 		}
 
-		// closing db
+		// closing cursor
 		c.close();
 
 		return position;

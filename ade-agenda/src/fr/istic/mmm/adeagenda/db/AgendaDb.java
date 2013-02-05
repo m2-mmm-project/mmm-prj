@@ -20,7 +20,7 @@ public class AgendaDb {
 		this.manager = new DbManager(context);
 	}
 
-	public void open() {
+	private void open() {
 		this.db = this.manager.getWritableDatabase();
 	}
 
@@ -31,7 +31,8 @@ public class AgendaDb {
 	}
 
 	public void close() {
-		this.manager.close();
+		if (this.db.isOpen())
+			this.manager.close();
 	}
 
 	/**
@@ -47,10 +48,14 @@ public class AgendaDb {
 
 		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
 				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
-						+ ")=date('" + DateFormater.getSQLDayString(day)
+						+ ")=date('" + DateFormater.getDateSQLString(day)
 						+ "')", null, null, null, null, null);
-
-		return cursorToEvents(cursor);
+		
+		List<Event> events = cursorToEvents(cursor);
+		
+		close();
+		
+		return events;
 	}
 
 	/**
@@ -64,16 +69,16 @@ public class AgendaDb {
 		ContentValues values = new ContentValues();
 		values.put(DbManager.COL_RES_NAME, event.getName());
 		values.put(DbManager.COL_RES_START,
-				DateFormater.getSQLDateString(event.getStart()));
+				DateFormater.getDateTimeSQLString(event.getStart()));
 		values.put(DbManager.COL_RES_END,
-				DateFormater.getSQLDateString(event.getEnd()));
+				DateFormater.getDateTimeSQLString(event.getEnd()));
 		values.put(DbManager.COL_RES_PLACE, event.getPlace());
 		values.put(DbManager.COL_RES_DESC, event.getDescription());
 
 		// Inserting Row
 		open();
 		db.insert(DbManager.TABLE_RESOURCE, null, values);
-		db.close();
+		close();
 	}
 
 	/**
@@ -90,9 +95,9 @@ public class AgendaDb {
 		if (!c.isNull(DbManager.IDX_COL_RES_NAME)) {
 			// getting data from db
 			event = new Event(c.getString(DbManager.IDX_COL_RES_NAME),
-					DateFormater.getSQLDate(c
+					DateFormater.getDateTimeSQL(c
 							.getString(DbManager.IDX_COL_RES_START)),
-					DateFormater.getSQLDate(c
+					DateFormater.getDateTimeSQL(c
 							.getString(DbManager.IDX_COL_RES_END)),
 					c.getString(DbManager.IDX_COL_RES_PLACE),
 					c.getString(DbManager.IDX_COL_RES_DEC));
@@ -119,7 +124,7 @@ public class AgendaDb {
 			} while (c.moveToNext());
 		}
 
-		// closing db
+		// closing cursor
 		c.close();
 
 		return events;

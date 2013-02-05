@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.util.Log;
 import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.task.DownloadCalendarTask;
-import fr.istic.mmm.adeagenda.task.ParseCalendarTask;
 import fr.istic.mmm.adeagenda.utils.Config;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
@@ -54,15 +53,12 @@ public class UpdateService extends Service {
 						resources = settings.getString(Config.PREF_RESOURCES_ID, "129");
 						login = settings.getString(Config.PREF_LOGIN, "cal");
 						password = settings.getString(Config.PREF_PASSWORD, "visu");
-						firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getURLString(1999, 11, 31));
-						lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getURLString(2000, 11, 31));
+						firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getDateURLString(1999, 11, 31));
+						lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getDateURLString(2000, 11, 31));
 
 						try {
 							DownloadCalendarTask downloadTask = new DownloadCalendarTask(projectId, resources, login, password, firstDate, lastDate);
 							downloadTask.execute();
-							
-							ParseCalendarTask parseTask = new ParseCalendarTask();
-							parseTask.execute();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -71,8 +67,7 @@ public class UpdateService extends Service {
 			}
 		};
 		
-		// TODO : Increase the time in production 
-		timer.schedule(doAsynchronousTask, 0, 60000);// 60000*60); // execute in every hour
+		timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
 		
 		super.onCreate();
 	}

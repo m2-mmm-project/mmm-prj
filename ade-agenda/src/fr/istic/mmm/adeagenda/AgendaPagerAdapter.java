@@ -62,27 +62,27 @@ public class AgendaPagerAdapter extends FragmentStatePagerAdapter {
 	    		
 	    	case 2:
 	    		c.add(Calendar.DAY_OF_YEAR, 2);
-	    		tabName = DateFormater.getDayString(c);
+	    		tabName = DateFormater.getDayDisplayString(c);
 	    		break;
 	    		
 	    	case 3:
 	    		c.add(Calendar.DAY_OF_YEAR, 3);
-	    		tabName = DateFormater.getDayString(c);
+	    		tabName = DateFormater.getDayDisplayString(c);
 	    		break;
 	    		
 	    	case 4:
 	    		c.add(Calendar.DAY_OF_YEAR, 4);
-	    		tabName = DateFormater.getDayString(c);
+	    		tabName = DateFormater.getDayDisplayString(c);
 	    		break;
 	    		
 	    	case 5:
 	    		c.add(Calendar.DAY_OF_YEAR, 5);
-	    		tabName = DateFormater.getDayString(c);
+	    		tabName = DateFormater.getDayDisplayString(c);
 	    		break;
 	    		
 	    	case 6:
 	    		c.add(Calendar.DAY_OF_YEAR, 6);
-	    		tabName = DateFormater.getDayString(c);
+	    		tabName = DateFormater.getDayDisplayString(c);
 	    		break;
 	    	}
 	    	

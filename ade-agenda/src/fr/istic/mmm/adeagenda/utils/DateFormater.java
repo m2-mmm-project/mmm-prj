@@ -10,30 +10,38 @@ import android.text.format.DateFormat;
 
 public class DateFormater {
 
-	public static String getURLString(int year, int month, int day) {
+	public static String getDateURLString(int year, int month, int day) {
 		return (String) DateFormat.format("yyyy-MM-dd",
 				getCalendarFromInt(year, month, day));
 	}
 
-	public static String getDisplayString(int year, int month, int day) {
+	public static String getDateDisplayString(int year, int month, int day) {
 		return (String) DateFormat.format("d MMMM yyyy",
 				getCalendarFromInt(year, month, day));
 	}
 	
-	public static String getDayString(Calendar cal) {
+	public static String getDayDisplayString(Calendar cal) {
 		return (String) DateFormat.format("EEEE", cal);
 	}
 
-	public static String getSQLDayString(Date day) {
+	public static String getDateSQLString(Date day) {
 		return (String) DateFormat.format("yyyy-MM-dd", day);
 	}
 	
-	public static String getSQLDateString(Date day) {
+	public static String getDateTimeSQLString(Date day) {
 		return (String) DateFormat.format("yyyy-MM-dd kk:mm", day);
 	}
 	
+	public static String getDateString(Date date) {
+		return (String) DateFormat.format("dd/MM/yy", date);
+	}
+
+	public static Object getTimeString(Date time) {
+		return (String) DateFormat.format("kk:mm", time);
+	}
+	
 	@SuppressLint("SimpleDateFormat")
-	public static Date getSQLDate(String sqlDate) {
+	public static Date getDateTimeSQL(String sqlDate) {
 		Date date = null;
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd kk:mm").parse(sqlDate);

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp" >
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,10 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/event_date"/>
+            android:text="@string/event_date" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -38,13 +38,22 @@
             android:id="@+id/event_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/event_start"/>
+            android:layout_alignParentLeft="true"
+            android:text="@string/event_start" />
 
         <TextView
             android:id="@+id/event_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/event_end"/>
-    </LinearLayout>
+            android:layout_toRightOf="@+id/event_start"
+            android:text="@string/event_end" />
+
+        <TextView
+            android:id="@+id/event_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/event_place" />
+    </RelativeLayout>
 
 </LinearLayout>

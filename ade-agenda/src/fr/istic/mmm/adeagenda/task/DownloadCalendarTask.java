@@ -82,6 +82,11 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 				destFile.close();
 
 				Log.v(TAG, "Download complete !");
+				
+				// Parse Calendar Task
+				ParseCalendarTask parseTask = new ParseCalendarTask();
+				parseTask.execute();
+				
 				return true;
 			} else {
 				return false;

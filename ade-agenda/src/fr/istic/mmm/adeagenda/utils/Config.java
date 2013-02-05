@@ -25,6 +25,9 @@ public abstract class Config {
 	public static final String MAP_POSITION_LAT = "positionLat";
 	public static final String MAP_POSITION_LNG = "positionLng";
 	
-	// Position
+	// Position du centre de la map
 	public static final LatLng CENTER_ISTIC = new LatLng(48.115671, -1.63813);
+	
+	// Période d'éxécution de l'UpdateService
+	public static final long TASK_PERIOD = 60000*60;  // Toutes les heures
 }

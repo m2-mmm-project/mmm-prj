@@ -45,7 +45,7 @@ public class ConfigActivity extends Activity {
 			startYear = year;
 			startMonth = monthOfYear;
 			startDay = dayOfMonth;
-			etDateStart.setText(DateFormater.getDisplayString(startYear,
+			etDateStart.setText(DateFormater.getDateDisplayString(startYear,
 					startMonth, startDay));
 
 		}
@@ -56,7 +56,7 @@ public class ConfigActivity extends Activity {
 			endYear = year;
 			endMonth = monthOfYear;
 			endDay = dayOfMonth;
-			etDateEnd.setText(DateFormater.getDisplayString(endYear, endMonth,
+			etDateEnd.setText(DateFormater.getDateDisplayString(endYear, endMonth,
 					endDay));
 
 		}
@@ -96,11 +96,11 @@ public class ConfigActivity extends Activity {
 
 		// Edit text date
 		etDateStart = (EditText) findViewById(R.id.editText_date_start);
-		etDateStart.setText(DateFormater.getDisplayString(startYear,
+		etDateStart.setText(DateFormater.getDateDisplayString(startYear,
 				startMonth, startDay));
 
 		etDateEnd = (EditText) findViewById(R.id.editText_date_end);
-		etDateEnd.setText(DateFormater.getDisplayString(endYear, endMonth,
+		etDateEnd.setText(DateFormater.getDateDisplayString(endYear, endMonth,
 				endDay));
 
 		dialogDateStart = new DatePickerDialog(this, mStartDateSetListener,
@@ -145,11 +145,11 @@ public class ConfigActivity extends Activity {
 		
 		// Switch date if necessary
 		if((startYear > endYear) || (startYear == endYear && startMonth > endMonth) || (startYear == endYear && startMonth == endMonth && startDay > endDay)){
-			firstDate = DateFormater.getURLString(endYear, endMonth, endDay);
-			lastDate = DateFormater.getURLString(startYear, startMonth,	startDay);
+			firstDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
+			lastDate = DateFormater.getDateURLString(startYear, startMonth,	startDay);
 		} else {
-			firstDate = DateFormater.getURLString(startYear, startMonth,startDay);
-			lastDate = DateFormater.getURLString(endYear, endMonth, endDay);
+			firstDate = DateFormater.getDateURLString(startYear, startMonth,startDay);
+			lastDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
 		}
 		
 		edit.putBoolean(Config.PREF_CONFIG_DONE, true);

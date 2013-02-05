@@ -86,9 +86,10 @@ public class CalendarReader implements ICalendarReader {
 		Collection<VEvent> col = calendar.getComponents(Component.VEVENT);
 		List<Event> events = new ArrayList<Event>();
 		for (VEvent e : col) {
+			String place =  e.getLocation().toString().substring(9, e.getLocation().toString().length()-2);
 			events.add(new Event(e.getSummary().getValue(), e.getStartDate()
-					.getDate(), e.getEndDate().getDate(), e.getLocation()
-					.toString(), e.getDescription().toString()));
+					.getDate(), e.getEndDate().getDate(), 
+					place, e.getDescription().toString()));
 		}
 		return events;
 	}

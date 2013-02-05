@@ -9,22 +9,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_wait"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/emptyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/please_wait"
+        android:text="@string/empty_agenda"
+        android:textAlignment="center"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:textAlignment="center" />
-    
-    <ProgressBar
-        android:id="@+id/progress"
-        android:indeterminate="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/emptyList"
-        android:layout_centerHorizontal="true"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>

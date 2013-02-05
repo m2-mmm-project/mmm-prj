@@ -5,14 +5,12 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 
-import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.HomeActivity;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.db.AgendaDb;
-import fr.istic.mmm.adeagenda.db.DbManager;
 import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.utils.Config;
 
