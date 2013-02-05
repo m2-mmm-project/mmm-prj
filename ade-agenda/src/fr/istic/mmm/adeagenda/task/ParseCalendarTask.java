@@ -37,6 +37,8 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		
 		List<Event> events = reader.allEvents();
 		Log.v(TAG, "Parsing complete : " + events.size() + " events found");
+		
+		// Update DB
 		Log.v(TAG, "Updating database ...");
 		
 		AgendaDb db = new AgendaDb(HomeActivity.APPLICATION_CONTEXT);
@@ -46,6 +48,7 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		}
 
 		Log.v(TAG, "Update complete ! Realy ?");
+		
 		return true;
 
 	}

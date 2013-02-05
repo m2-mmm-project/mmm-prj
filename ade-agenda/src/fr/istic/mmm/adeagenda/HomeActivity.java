@@ -85,9 +85,9 @@ public class HomeActivity extends SherlockActivity {
 		List<Event> e = db.getEventByDay(new Date());
 //
 		GPSPositionDB db2 = new GPSPositionDB(this);
-//		db2.add("place1", 1.1, 1.2);
-//		db2.add("place", 2.1, 2.2);
-//		db2.add("place3", 3.1, 3.2);
+		db2.add("LOCATION:B02B-E212\n", 48.115888,-1.637961);
+		db2.add("LOCATION:B02B-E105", 48.116181,-1.638119);
+		db2.add("LOCATION:B02B-E210", 48.115965,-1.637945);
 //		db2.add("place4", 4.1, 4.2);
 //		
 		Log.v("oo", "read");
