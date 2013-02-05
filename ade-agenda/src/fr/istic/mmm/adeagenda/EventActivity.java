@@ -59,6 +59,8 @@ public class EventActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
 		intent.putExtra(Config.MAP_POSITION_LAT, position.latitude);
 		intent.putExtra(Config.MAP_POSITION_LNG, position.longitude);
+		intent.putExtra(Config.MAP_PLACE_NAME, event.getPlace());
+		
 		startActivity(intent);
 	}
 

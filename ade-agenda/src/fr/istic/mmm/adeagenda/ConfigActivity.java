@@ -152,6 +152,7 @@ public class ConfigActivity extends Activity {
 			lastDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
 		}
 		
+		
 		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
 		edit.putInt(Config.PREF_PROJECT_ID, projectId);
 		edit.putString(Config.PREF_RESOURCES_ID, resources);
