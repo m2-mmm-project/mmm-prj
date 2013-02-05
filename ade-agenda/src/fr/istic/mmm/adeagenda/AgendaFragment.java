@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.istic.mmm.adeagenda.db.AgendaDb;
 import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
