@@ -31,4 +31,5 @@ public abstract class Config {
 	
 	// Période d'éxécution de l'UpdateService
 	public static final long TASK_PERIOD = 60000*60;  // Toutes les heures
+	public static final long NOTIF_TASK_PERIOD = 60000*1;  
 }

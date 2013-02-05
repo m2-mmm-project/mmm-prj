@@ -4,5 +4,6 @@
 	<string name="btn_config">Configuration</string>
 	<string name="btn_agenda">Mon Agenda</string>
 	<string name="btn_map">Carte</string>
+	<string name="btn_debug">Debug</string>
 
 </resources>

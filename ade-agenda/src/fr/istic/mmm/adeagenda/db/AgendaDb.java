@@ -28,7 +28,7 @@ public class AgendaDb {
 		if (this.db.isOpen())
 			this.manager.close();
 	}
-	
+
 	/**
 	 * Clear all data
 	 */
@@ -53,14 +53,40 @@ public class AgendaDb {
 				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
 						+ ")=date('" + DateFormater.getDateSQLString(day)
 						+ "')", null, null, null, null, null);
-		
+
 		List<Event> events = cursorToEvents(cursor);
-		
+
 		close();
-		
+
 		return events;
 	}
 
+	/**
+	 * Get event by day
+	 * 
+	 * @param day
+	 *            Day date
+	 * @return List<Event> object
+	 */
+	public Event getNextEvent(Date day) {
+
+		open();
+
+		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
+				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
+						+ ")>date('" + DateFormater.getDateSQLString(day)
+						+ "')", null, null, null, DbManager.COL_RES_START, "1");
+
+		List<Event> events = cursorToEvents(cursor);
+
+		close();
+		if(events.size()>0){
+			return events.get(0);
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Add a event
 	 * 

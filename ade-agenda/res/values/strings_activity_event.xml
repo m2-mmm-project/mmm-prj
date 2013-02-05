@@ -1,0 +1,5 @@
+<resources>
+
+    <string name="title_activity_event">ADE Agenda</string>
+    <string name="see_on_map">Position sur la carte</string>
+</resources>

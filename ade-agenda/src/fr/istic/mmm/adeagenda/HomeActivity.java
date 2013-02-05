@@ -1,5 +1,6 @@
 package fr.istic.mmm.adeagenda;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,14 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockActivity;
-
 import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
-public class HomeActivity extends SherlockActivity {
+public class HomeActivity extends Activity {
 
+	private static final String TAG = HomeActivity.class.getSimpleName();
 	public static Context APPLICATION_CONTEXT;
 
 	@Override
@@ -25,24 +24,18 @@ public class HomeActivity extends SherlockActivity {
 		APPLICATION_CONTEXT = this.getApplicationContext();
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
-		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE,
-				false);
+		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE, false);
 
 		// Mise en place du service de mise a jour du fichier ics
 		startService(new Intent(getApplicationContext(), UpdateService.class));
 
 		if (!configIsDone) {
-			Log.v("HomeActivity", "Config not done");
-			// startActivity(new Intent(getApplicationContext(),
-			// ConfigActivity.class));
-			Toast.makeText(getApplicationContext(),
-					"Vous devriez configurer votre agenda", Toast.LENGTH_LONG)
-					.show();
+			Log.v(TAG, "Config not done");
+			Toast.makeText(getApplicationContext(), "Vous devriez configurer votre agenda", Toast.LENGTH_LONG).show();
+			
 		} else {
-			Toast.makeText(getApplicationContext(), "Config ok",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Votre agenda est configuré", Toast.LENGTH_SHORT).show();
 		}
-
 	}
 
 	/**
@@ -60,8 +53,7 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		startActivity(new Intent(getApplicationContext(),
-				AgendaPagerActivity.class));
+		startActivity(new Intent(getApplicationContext(), AgendaPagerActivity.class));
 	}
 
 	/**
@@ -74,6 +66,5 @@ public class HomeActivity extends SherlockActivity {
 		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
 		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
 		intent.putExtra(Config.MAP_PLACE_NAME, "B12D-I50");
-		startActivity(intent);
 	}
 }

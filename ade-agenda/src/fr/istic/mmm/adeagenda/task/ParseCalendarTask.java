@@ -15,7 +15,7 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
-	private static final String TAG = "ParseCalendarTask";
+	private static final String TAG = ParseCalendarTask.class.getSimpleName();
 	
 	@Override
 	protected Boolean doInBackground(final URL... urls) {
@@ -31,8 +31,8 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		}
 		
 		CalendarReader reader = new CalendarReader(is);
-		
 		List<Event> events = reader.allEvents();
+		
 		Log.v(TAG, "Parsing complete : " + events.size() + " events found");
 		
 		// Update DB
@@ -45,7 +45,6 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		}
 
 		Log.v(TAG, "Update complete ! Realy ?");
-		
 		return true;
 
 	}
