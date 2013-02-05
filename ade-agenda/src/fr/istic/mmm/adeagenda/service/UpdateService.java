@@ -9,15 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.task.DownloadCalendarTask;
 import fr.istic.mmm.adeagenda.utils.Config;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class UpdateService extends Service {
 
-	private static final String TAG = ConfigActivity.class.getSimpleName();
-	
+	private static final String TAG = "UpdateService";
+
 	private SharedPreferences settings;
 
 	private int projectId;
@@ -34,13 +33,11 @@ public class UpdateService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.v("UpdateService", "Creating Service");
+		Log.v(TAG, "Creating Service");
 
-
-		
 		final Handler handler = new Handler();
 		Timer timer = new Timer();
-		
+
 		TimerTask doAsynchronousTask = new TimerTask() {
 			@Override
 			public void run() {
@@ -48,33 +45,52 @@ public class UpdateService extends Service {
 					public void run() {
 						Log.v(TAG, "Running task");
 						settings = getSharedPreferences(Config.ADE_PREF, 0);
-						
-						projectId = settings.getInt(Config.PREF_PROJECT_ID, 31);
-						resources = settings.getString(Config.PREF_RESOURCES_ID, "129");
-						login = settings.getString(Config.PREF_LOGIN, "cal");
-						password = settings.getString(Config.PREF_PASSWORD, "visu");
-						firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getDateURLString(1999, 11, 31));
-						lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getDateURLString(2000, 11, 31));
 
-						try {
-							DownloadCalendarTask downloadTask = new DownloadCalendarTask(projectId, resources, login, password, firstDate, lastDate);
-							downloadTask.execute();
-						} catch (Exception e) {
-							e.printStackTrace();
+						boolean configIsDone = settings.getBoolean(
+								Config.PREF_CONFIG_DONE, false);
+
+						if (configIsDone) {
+							Log.v(TAG, "Config Ok, launch UpdateTask");
+							projectId = settings.getInt(Config.PREF_PROJECT_ID,
+									31);
+							resources = settings.getString(
+									Config.PREF_RESOURCES_ID, "129");
+							login = settings
+									.getString(Config.PREF_LOGIN, "cal");
+							password = settings.getString(Config.PREF_PASSWORD,
+									"visu");
+							firstDate = settings.getString(
+									Config.PREF_START_DATE,
+									DateFormater.getDateURLString(1999, 11, 31));
+							lastDate = settings
+									.getString(Config.PREF_END_DATE,
+											DateFormater.getDateURLString(2000,
+													11, 31));
+
+							try {
+								DownloadCalendarTask downloadTask = new DownloadCalendarTask(
+										projectId, resources, login, password,
+										firstDate, lastDate);
+								downloadTask.execute();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						} else {
+							Log.v(TAG, "Bad config, no update");
 						}
 					}
 				});
 			}
 		};
-		
+
 		timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
-		
+
 		super.onCreate();
 	}
 
 	@Override
 	public void onDestroy() {
-		Log.v("UpdateService", "Service shutdown");
+		Log.v(TAG, "Service shutdown");
 		super.onDestroy();
 	}
 

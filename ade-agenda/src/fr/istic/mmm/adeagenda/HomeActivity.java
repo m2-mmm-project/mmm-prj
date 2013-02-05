@@ -1,5 +1,6 @@
 package fr.istic.mmm.adeagenda;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +23,12 @@ import fr.istic.mmm.adeagenda.utils.Config;
 public class HomeActivity extends SherlockActivity {
 
 	public static Context APPLICATION_CONTEXT;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+
 		APPLICATION_CONTEXT = this.getApplicationContext();
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
@@ -76,30 +77,22 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		AgendaDb db = new AgendaDb(this);
-//		db.reset();
-//		db.add(new Event("name1", DateFormater.getSQLDate("2013-02-04 08:00"), DateFormater.getSQLDate("2013-02-04 10:00"), "place1", "description"));
-//		db.add(new Event("name2", DateFormater.getSQLDate("2013-02-05 08:00"), DateFormater.getSQLDate("2013-02-05 10:00"), "place2", "description"));
-//		db.add(new Event("name3", DateFormater.getSQLDate("2013-02-05 14:00"), DateFormater.getSQLDate("2013-02-05 16:00"), "place3", "description"));
-//		db.add(new Event("name4", DateFormater.getSQLDate("2013-02-06 08:00"), DateFormater.getSQLDate("2013-02-06 10:00"), "place4", "description"));
-		List<Event> e = db.getEventByDay(new Date());
-//
-		GPSPositionDB db2 = new GPSPositionDB(this);
-		db2.add("LOCATION:B02B-E212\n", 48.115888,-1.637961);
-		db2.add("LOCATION:B02B-E105", 48.116181,-1.638119);
-		db2.add("LOCATION:B02B-E210", 48.115965,-1.637945);
-//		db2.add("place4", 4.1, 4.2);
-//		
-		Log.v("oo", "read");
-		for (Event ev : e) {
-			Log.v("Event", ev.toString());
-			Log.v(" Pos", db2.getPositionByName(ev.getPlace()).toString());
-		}
+		String name = "ADEAgenda.sqlite";
+		String androidDBPath = "/data/"
+				+ this.getPackageName() + "/databases/";
+		File androidDB = new File(androidDBPath, name);
 
-//		 Intent intent = new Intent(getApplicationContext(),
-//		 MapActivity.class);
-//		 intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
-//		 intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
-//		 startActivity(intent);
+		if (androidDB.exists())
+			Log.v("DbManager", "Andro DB Exist");
+		else
+			Log.v("DbManager", "Andro DB not exist");
+		
+		GPSPositionDB db2 = new GPSPositionDB(this);
+		db2.add("B02B-E212", 48.115888, -1.637961);
+
+//		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+//		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
+//		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
+//		startActivity(intent);
 	}
 }

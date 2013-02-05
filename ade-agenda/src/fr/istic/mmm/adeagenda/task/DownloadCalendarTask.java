@@ -8,12 +8,11 @@ import java.net.URLConnection;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.utils.Config;
 
 public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
-	private static final String TAG = ConfigActivity.class.getSimpleName();
+	private static final String TAG = "DownloadCalendarTask";
 	
 	private int projectId;
 	private String resources;
@@ -33,7 +32,7 @@ public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
 	@Override
 	protected Boolean doInBackground(final URL... urls) {
-		Log.v(TAG, "Updating");
+		Log.v(TAG, "Update Task");
 		String calType = "ical";
 
 		final String cal_url = "http://plannings.univ-rennes1.fr/ade/custom/modules/plannings/direct_cal.jsp?calType="

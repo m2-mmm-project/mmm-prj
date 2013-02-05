@@ -24,15 +24,18 @@ public class AgendaDb {
 		this.db = this.manager.getWritableDatabase();
 	}
 
+	public void close() {
+		if (this.db.isOpen())
+			this.manager.close();
+	}
+	
+	/**
+	 * Clear all data
+	 */
 	public void clear() {
 		open();
 		db.execSQL("DELETE FROM " + DbManager.TABLE_RESOURCE + ";");
 		close();
-	}
-
-	public void close() {
-		if (this.db.isOpen())
-			this.manager.close();
 	}
 
 	/**

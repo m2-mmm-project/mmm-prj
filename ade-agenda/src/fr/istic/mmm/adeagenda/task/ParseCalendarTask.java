@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.HomeActivity;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.db.AgendaDb;
@@ -16,7 +15,7 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
-	private static final String TAG = ConfigActivity.class.getSimpleName();
+	private static final String TAG = "ParseCalendarTask";
 	
 	@Override
 	protected Boolean doInBackground(final URL... urls) {
