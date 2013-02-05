@@ -58,7 +58,6 @@ public class AgendaFragment extends Fragment {
 		// definition de la date associée à cet onglet
 		date = new Date(args.getLong(ARG_DATE));
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-		android.util.Log.d(TAG, "WANTED DATE: " + df.format(date));
 
 		eventList = (ListView) rootView.findViewById(R.id.eventList);
 		eventList.setEmptyView(rootView.findViewById(R.id.emptyList));
@@ -97,18 +96,10 @@ public class AgendaFragment extends Fragment {
 					for (Event e : events) {
 						final HashMap<String, String> item = new HashMap<String, String>();
 						item.put(ITEM_NAME, e.getName());
-						item.put(ITEM_DATE,
-								DateFormater.getDateString(e.getStart()));
-						item.put(
-								ITEM_START,
-								getString(R.string.event_start, DateFormater
-										.getTimeString(e.getStart())));
-						item.put(
-								ITEM_END,
-								getString(R.string.event_end,
-										DateFormater.getTimeString(e.getEnd())));
-						item.put(
-								ITEM_PLACE, e.getPlace());
+						item.put(ITEM_DATE, DateFormater.getDateString(e.getStart()));
+						item.put(ITEM_START, getString(R.string.event_start, DateFormater.getTimeString(e.getStart())));
+						item.put(ITEM_END, getString(R.string.event_end, DateFormater.getTimeString(e.getEnd())));
+						item.put(ITEM_PLACE, e.getPlace());
 						getActivity().runOnUiThread(new Runnable() {
 							@Override
 							public void run() {

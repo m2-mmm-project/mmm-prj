@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.HomeActivity;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
@@ -16,7 +17,7 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
-	private static final String TAG = ConfigActivity.class.getSimpleName();
+	private static final String TAG = ParseCalendarTask.class.getSimpleName();
 	
 	@Override
 	protected Boolean doInBackground(final URL... urls) {
@@ -32,8 +33,8 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		}
 		
 		CalendarReader reader = new CalendarReader(is);
-		
 		List<Event> events = reader.allEvents();
+		
 		Log.v(TAG, "Parsing complete : " + events.size() + " events found");
 		
 		// Update DB
@@ -46,7 +47,6 @@ public class ParseCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 		}
 
 		Log.v(TAG, "Update complete ! Realy ?");
-		
 		return true;
 
 	}

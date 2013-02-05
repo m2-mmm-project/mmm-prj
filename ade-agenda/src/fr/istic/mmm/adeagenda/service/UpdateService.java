@@ -16,7 +16,7 @@ import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class UpdateService extends Service {
 
-	private static final String TAG = ConfigActivity.class.getSimpleName();
+	private static final String TAG = UpdateService.class.getSimpleName();
 	
 	private SharedPreferences settings;
 
@@ -34,9 +34,8 @@ public class UpdateService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.v("UpdateService", "Creating Service");
-
-
+		super.onCreate();
+		Log.v(TAG, "Creating Service");
 		
 		final Handler handler = new Handler();
 		Timer timer = new Timer();
@@ -53,8 +52,8 @@ public class UpdateService extends Service {
 						resources = settings.getString(Config.PREF_RESOURCES_ID, "129");
 						login = settings.getString(Config.PREF_LOGIN, "cal");
 						password = settings.getString(Config.PREF_PASSWORD, "visu");
-						firstDate = settings.getString(Config.PREF_START_DATE,DateFormater.getDateURLString(1999, 11, 31));
-						lastDate = settings.getString(Config.PREF_END_DATE,DateFormater.getDateURLString(2000, 11, 31));
+						firstDate = settings.getString(Config.PREF_START_DATE, DateFormater.getDateURLString(2012, 9, 01));
+						lastDate = settings.getString(Config.PREF_END_DATE, DateFormater.getDateURLString(2013, 6, 31));
 
 						try {
 							DownloadCalendarTask downloadTask = new DownloadCalendarTask(projectId, resources, login, password, firstDate, lastDate);
@@ -68,8 +67,6 @@ public class UpdateService extends Service {
 		};
 		
 		timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
-		
-		super.onCreate();
 	}
 
 	@Override

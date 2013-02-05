@@ -13,7 +13,7 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class DownloadCalendarTask extends AsyncTask<URL, Integer, Boolean> {
 	
-	private static final String TAG = ConfigActivity.class.getSimpleName();
+	private static final String TAG = DownloadCalendarTask.class.getSimpleName();
 	
 	private int projectId;
 	private String resources;

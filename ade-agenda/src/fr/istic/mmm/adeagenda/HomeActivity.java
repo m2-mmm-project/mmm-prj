@@ -21,6 +21,7 @@ import fr.istic.mmm.adeagenda.utils.Config;
 
 public class HomeActivity extends SherlockActivity {
 
+	private static final String TAG = HomeActivity.class.getSimpleName();
 	public static Context APPLICATION_CONTEXT;
 	
 	@Override
@@ -31,24 +32,18 @@ public class HomeActivity extends SherlockActivity {
 		APPLICATION_CONTEXT = this.getApplicationContext();
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
-		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE,
-				false);
+		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE, false);
 
 		// Mise en place du service de mise a jour du fichier ics
 		startService(new Intent(getApplicationContext(), UpdateService.class));
 
 		if (!configIsDone) {
-			Log.v("HomeActivity", "Config not done");
-			// startActivity(new Intent(getApplicationContext(),
-			// ConfigActivity.class));
-			Toast.makeText(getApplicationContext(),
-					"Vous devriez configurer votre agenda", Toast.LENGTH_LONG)
-					.show();
+			Log.v(TAG, "Config not done");
+			Toast.makeText(getApplicationContext(), "Vous devriez configurer votre agenda", Toast.LENGTH_LONG).show();
+			
 		} else {
-			Toast.makeText(getApplicationContext(), "Config ok",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Votre agenda est configuré", Toast.LENGTH_SHORT).show();
 		}
-
 	}
 
 	/**
@@ -90,16 +85,16 @@ public class HomeActivity extends SherlockActivity {
 		db2.add("LOCATION:B02B-E210", 48.115965,-1.637945);
 //		db2.add("place4", 4.1, 4.2);
 //		
-		Log.v("oo", "read");
+		Log.v(TAG, "read");
 		for (Event ev : e) {
-			Log.v("Event", ev.toString());
-			Log.v(" Pos", db2.getPositionByName(ev.getPlace()).toString());
+			Log.v(TAG, ev.toString());
+			Log.v(TAG, db2.getPositionByName(ev.getPlace()).toString());
 		}
 
-//		 Intent intent = new Intent(getApplicationContext(),
-//		 MapActivity.class);
-//		 intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
-//		 intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
-//		 startActivity(intent);
+		 Intent intent = new Intent(getApplicationContext(),
+		 MapActivity.class);
+		 intent.putExtra(Config.MAP_POSITION_LAT,48.115671);
+		 intent.putExtra(Config.MAP_POSITION_LNG,-1.63813);
+		 startActivity(intent);
 	}
 }
