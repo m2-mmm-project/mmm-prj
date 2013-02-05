@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="10"
         android:targetSdkVersion="17" />
 
     <uses-feature
@@ -61,14 +61,6 @@
         <activity
             android:name="fr.istic.mmm.adeagenda.AgendaPagerActivity"
             android:label="@string/title_activity_agenda_pager" >
-        </activity>
-        <activity
-            android:name="fr.istic.mmm.adeagenda.EventListActivity"
-            android:label="@string/title_event_list"
-            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="fr.istic.mmm.adeagenda.HomeActivity" />
         </activity>
         <activity
             android:name="fr.istic.mmm.adeagenda.EventDetailActivity"

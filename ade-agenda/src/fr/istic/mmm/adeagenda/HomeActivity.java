@@ -56,7 +56,7 @@ public class HomeActivity extends Activity {
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		startActivity(new Intent(getApplicationContext(), EventListActivity.class));
+		startActivity(new Intent(getApplicationContext(), AgendaPagerActivity.class));
 	}
 
 	/**
