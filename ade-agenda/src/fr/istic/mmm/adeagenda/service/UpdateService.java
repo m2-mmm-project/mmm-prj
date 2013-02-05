@@ -26,7 +26,7 @@ import fr.istic.mmm.adeagenda.utils.DateFormater;
 public class UpdateService extends Service {
 
 	private static final String TAG = UpdateService.class.getSimpleName();
-	
+
 	private SharedPreferences settings;
 
 	private int projectId;
@@ -45,7 +45,7 @@ public class UpdateService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.v(TAG, "Creating Service");
-		
+
 		final Handler handler = new Handler();
 		Timer timer = new Timer();
 
@@ -75,7 +75,8 @@ public class UpdateService extends Service {
 									DateFormater.getDateURLString(2012, 9, 01));
 							lastDate = settings
 									.getString(Config.PREF_END_DATE,
-											DateFormater.getDateURLString(2013,	11, 31));
+											DateFormater.getDateURLString(2013,
+													11, 31));
 
 							try {
 								DownloadCalendarTask downloadTask = new DownloadCalendarTask(
@@ -94,8 +95,7 @@ public class UpdateService extends Service {
 		};
 
 		timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
-		
-		
+
 		TimerTask setNotificationTask = new TimerTask() {
 			@Override
 			public void run() {
@@ -112,20 +112,33 @@ public class UpdateService extends Service {
 						DateTime wantedDate = new DateTime(date);
 						Event event = db.getNextEvent(wantedDate);
 
-						   // Creates an explicit intent for an Activity in your app
-						Bundle eventInfo = new Bundle();
-						eventInfo.putString(EventActivity.EVENT_NAME, event.getName());
-						eventInfo.putLong(EventActivity.EVENT_START, event.getStart().getTime());
-						eventInfo.putLong(EventActivity.EVENT_END, event.getEnd().getTime());
-						eventInfo.putString(EventActivity.EVENT_PLACE, event.getPlace());
-						eventInfo.putString(EventActivity.EVENT_DESCRIPTION, event.getDescription());
+						// Creates an explicit intent for an Activity in your
+						// app
+						if (event != null) {
+							Bundle eventInfo = new Bundle();
+							eventInfo.putString(EventActivity.EVENT_NAME,
+									event.getName());
+							eventInfo.putLong(EventActivity.EVENT_START, event
+									.getStart().getTime());
+							eventInfo.putLong(EventActivity.EVENT_END, event
+									.getEnd().getTime());
+							eventInfo.putString(EventActivity.EVENT_PLACE,
+									event.getPlace());
+							eventInfo.putString(
+									EventActivity.EVENT_DESCRIPTION,
+									event.getDescription());
 
-						Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-						intent.putExtras(eventInfo);
+							Intent intent = new Intent(getApplicationContext(),
+									AlarmReceiver.class);
+							intent.putExtras(eventInfo);
 
-						PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 13454, intent, 0);
-						AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-						alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 1000, pendingIntent);
+							PendingIntent pendingIntent = PendingIntent
+									.getBroadcast(getApplicationContext(),
+											13454, intent, 0);
+							AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+							alarmManager.set(AlarmManager.RTC_WAKEUP,
+									cal.getTimeInMillis() + 1000, pendingIntent);
+						}
 
 						Log.v(TAG, "Alarm setted");
 
@@ -135,7 +148,7 @@ public class UpdateService extends Service {
 		};
 
 		timer.schedule(setNotificationTask, 0, Config.NOTIF_TASK_PERIOD);
-		
+
 	}
 
 	@Override

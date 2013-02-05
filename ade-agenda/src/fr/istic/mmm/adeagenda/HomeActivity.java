@@ -1,5 +1,8 @@
 package fr.istic.mmm.adeagenda;
 
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import fr.istic.mmm.adeagenda.db.AgendaDb;
+import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
@@ -62,9 +67,16 @@ public class HomeActivity extends Activity {
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
-		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
-		intent.putExtra(Config.MAP_PLACE_NAME, "B12D-I50");
+		AgendaDb db = new AgendaDb(this);
+		List<Event> events = db.getEventByDay(new Date());
+		
+		for (Event e : events) {
+			Log.v("pos", e.getPlace());
+		}
+		
+//		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+//		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
+//		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
+//		intent.putExtra(Config.MAP_PLACE_NAME, "B12D-I50");
 	}
 }

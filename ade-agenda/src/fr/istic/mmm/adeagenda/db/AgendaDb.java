@@ -52,7 +52,7 @@ public class AgendaDb {
 		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
 				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
 						+ ")=date('" + DateFormater.getDateSQLString(day)
-						+ "')", null, null, null, null, null);
+						+ "')", null, null, null, DbManager.COL_RES_START, null);
 
 		List<Event> events = cursorToEvents(cursor);
 
