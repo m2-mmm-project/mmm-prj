@@ -1,14 +1,10 @@
 package fr.istic.mmm.adeagenda;
 
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.test.suitebuilder.annotation.MediumTest;
 import android.view.View;
 import android.widget.TextView;
 

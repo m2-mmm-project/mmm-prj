@@ -2,7 +2,6 @@ package fr.istic.mmm.adeagenda.service;
 
 import java.util.Date;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;

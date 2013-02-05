@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
