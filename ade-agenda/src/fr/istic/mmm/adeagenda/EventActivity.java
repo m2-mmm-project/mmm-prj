@@ -1,20 +1,23 @@
 package fr.istic.mmm.adeagenda;
 
-import java.io.File;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.test.suitebuilder.annotation.MediumTest;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import fr.istic.mmm.adeagenda.db.GPSPositionDB;
 import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.utils.Config;
+import fr.istic.mmm.adeagenda.utils.DateFormater;
 
 public class EventActivity extends Activity {
 
@@ -26,7 +29,6 @@ public class EventActivity extends Activity {
 	public static final String EVENT_PLACE = "place";
 	public static final String EVENT_DESCRIPTION = "description";
 
-	private Context context;
 	private Event event;
 	
 	@Override
@@ -43,11 +45,11 @@ public class EventActivity extends Activity {
 		event = new Event(name, new Date(start), new Date(end), place, description);
 		
 		((TextView) findViewById(R.id.event_name)).setText(event.getName());
-		((TextView) findViewById(R.id.event_date)).setText("Demain");
-		((TextView) findViewById(R.id.event_start)).setText(" de 10h00");
-		((TextView) findViewById(R.id.event_end)).setText(" à 12h15");
+		((TextView) findViewById(R.id.event_date)).setText(DateFormater.getDateString(event.getStart()));
+		((TextView) findViewById(R.id.event_start)).setText(getString(R.string.event_start, DateFormater.getTimeString(event.getStart())));
+		((TextView) findViewById(R.id.event_end)).setText(getString(R.string.event_end, DateFormater.getTimeString(event.getEnd())));
 		((TextView) findViewById(R.id.event_place)).setText(event.getPlace());
-		((TextView) findViewById(R.id.event_desc)).setText(event.getDescription());
+		((TextView) findViewById(R.id.event_desc)).setText(event.getDescription().replaceAll("\\\\n", "\n"));
 	}
 	
 	/**

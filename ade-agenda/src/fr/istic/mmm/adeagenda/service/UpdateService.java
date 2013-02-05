@@ -62,10 +62,10 @@ public class UpdateService extends Service {
 									"visu");
 							firstDate = settings.getString(
 									Config.PREF_START_DATE,
-									DateFormater.getDateURLString(1999, 11, 31));
+									DateFormater.getDateURLString(2012, 9, 01));
 							lastDate = settings
 									.getString(Config.PREF_END_DATE,
-											DateFormater.getDateURLString(2000,
+											DateFormater.getDateURLString(2013,
 													11, 31));
 
 							try {
