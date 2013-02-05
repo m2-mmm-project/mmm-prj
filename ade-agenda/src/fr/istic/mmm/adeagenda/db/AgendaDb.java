@@ -24,11 +24,9 @@ public class AgendaDb {
 		this.db = this.manager.getWritableDatabase();
 	}
 
-	public void reset() {
+	public void clear() {
 		open();
 		db.execSQL("DELETE FROM " + DbManager.TABLE_RESOURCE + ";");
-
-		db.execSQL("DELETE FROM " + DbManager.TABLE_GPSPOSITION + ";");
 		close();
 	}
 
