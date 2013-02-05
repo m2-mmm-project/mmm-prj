@@ -133,7 +133,6 @@ public class AgendaFragment extends Fragment {
 		@Override
 		public void onItemClick(AdapterView<?> adpt, View view, int pos, long id) {
 			Event e = events.get(pos);
-			Toast.makeText(getActivity(), "Event "+e.getName(), Toast.LENGTH_SHORT).show();
 			
 			Bundle eventInfo = new Bundle();
 			eventInfo.putString(EventActivity.EVENT_NAME, e.getName());

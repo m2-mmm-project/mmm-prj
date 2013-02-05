@@ -35,7 +35,6 @@ public class GPSPositionDB {
 	 * @return LatLng position
 	 */
 	public LatLng getPositionByName(String name) {
-
 		open();
 
 		Cursor cursor = this.db.query(DbManager.TABLE_PLACE_POSITION,

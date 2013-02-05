@@ -28,7 +28,7 @@ public class AgendaDb {
 		if (this.db.isOpen())
 			this.manager.close();
 	}
-	
+
 	/**
 	 * Clear all data
 	 */
@@ -53,11 +53,11 @@ public class AgendaDb {
 				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
 						+ ")=date('" + DateFormater.getDateSQLString(day)
 						+ "')", null, null, null, null, null);
-		
+
 		List<Event> events = cursorToEvents(cursor);
-		
+
 		close();
-		
+
 		return events;
 	}
 
