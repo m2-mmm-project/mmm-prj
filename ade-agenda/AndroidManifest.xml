@@ -54,6 +54,8 @@
 
         <service android:name="fr.istic.mmm.adeagenda.service.UpdateService" />
 
+        <receiver android:name="AlarmReceiver" />
+        
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCgZ1iAsEQIqiVZRBd72Q77Mt6bhoitlhk" />
