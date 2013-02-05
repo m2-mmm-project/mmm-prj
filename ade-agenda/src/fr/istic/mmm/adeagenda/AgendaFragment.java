@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,16 +136,14 @@ public class AgendaFragment extends Fragment {
 			Toast.makeText(getActivity(), "Event "+e.getName(), Toast.LENGTH_SHORT).show();
 			
 			Bundle eventInfo = new Bundle();
-			eventInfo.putString(EventFragment.EVENT_NAME, e.getName());
-			eventInfo.putLong(EventFragment.EVENT_START, e.getStart().getTime());
-			eventInfo.putLong(EventFragment.EVENT_END, e.getEnd().getTime());
-			eventInfo.putString(EventFragment.EVENT_PLACE, e.getPlace());
-			eventInfo.putString(EventFragment.EVENT_DESCRIPTION, e.getDescription());
+			eventInfo.putString(EventActivity.EVENT_NAME, e.getName());
+			eventInfo.putLong(EventActivity.EVENT_START, e.getStart().getTime());
+			eventInfo.putLong(EventActivity.EVENT_END, e.getEnd().getTime());
+			eventInfo.putString(EventActivity.EVENT_PLACE, e.getPlace());
+			eventInfo.putString(EventActivity.EVENT_DESCRIPTION, e.getDescription());
 			
-			Fragment fragment = new EventFragment();
-			fragment.setArguments(eventInfo);
-			Intent fragIntent = new Intent(getActivity(), EventFragment.class);
-//			fragIntent.putExtras(eventInfo);
+			Intent fragIntent = new Intent(getActivity(), EventActivity.class);
+			fragIntent.putExtras(eventInfo);
 			startActivity(fragIntent);
 		}
 	};

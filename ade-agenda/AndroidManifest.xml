@@ -60,15 +60,11 @@
 
         <activity
             android:name="fr.istic.mmm.adeagenda.AgendaPagerActivity"
-            android:label="@string/title_activity_agenda_pager" >
-        </activity>
+            android:label="@string/title_activity_agenda_pager" />
         <activity
-            android:name="fr.istic.mmm.adeagenda.EventDetailActivity"
-            android:label="@string/title_event_detail"
-            android:parentActivityName=".EventListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".EventListActivity" />
+            android:name="fr.istic.mmm.adeagenda.EventActivity"
+            android:label="@string/title_activity_event" >
+            
         </activity>
     </application>
 
