@@ -7,8 +7,6 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-import fr.istic.mmm.adeagenda.ConfigActivity;
 import fr.istic.mmm.adeagenda.HomeActivity;
 import fr.istic.mmm.adeagenda.calendar.CalendarReader;
 import fr.istic.mmm.adeagenda.db.AgendaDb;

@@ -38,7 +38,7 @@ public class GPSPositionDB {
 
 		open();
 
-		Cursor cursor = this.db.query(DbManager.TABLE_GPSPOSITION,
+		Cursor cursor = this.db.query(DbManager.TABLE_PLACE_POSITION,
 				DbManager.FIELDS_GPSPOSITION, DbManager.COL_POS_PLACE + "=?",
 				new String[] { name }, null, null, null, null);
 
@@ -68,7 +68,7 @@ public class GPSPositionDB {
 
 		// Inserting Row
 		open();
-		db.insert(DbManager.TABLE_GPSPOSITION, null, values);
+		db.insert(DbManager.TABLE_PLACE_POSITION, null, values);
 		close();
 	}
 
