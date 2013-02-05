@@ -59,7 +59,7 @@ public class HomeActivity extends Activity {
 		cal.add(Calendar.SECOND, 10);
 
 		Intent intent = new Intent(this, AlarmReceiver.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 13454, intent, 0);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 13454, intent, 0);
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 1000, pendingIntent);
 
