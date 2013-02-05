@@ -1,9 +1,8 @@
 package fr.istic.mmm.adeagenda;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,16 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockActivity;
-
-import fr.istic.mmm.adeagenda.db.AgendaDb;
 import fr.istic.mmm.adeagenda.db.GPSPositionDB;
-import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
-public class HomeActivity extends SherlockActivity {
+public class HomeActivity extends Activity {
 
 	private static final String TAG = HomeActivity.class.getSimpleName();
 	public static Context APPLICATION_CONTEXT;
@@ -62,8 +56,7 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickAgenda(View view) {
-		startActivity(new Intent(getApplicationContext(),
-				AgendaPagerActivity.class));
+		startActivity(new Intent(getApplicationContext(), EventListActivity.class));
 	}
 
 	/**

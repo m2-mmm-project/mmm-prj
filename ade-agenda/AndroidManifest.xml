@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <uses-feature
@@ -27,8 +27,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock" >
+        android:label="@string/app_name">
         <uses-library android:name="com.google.android.maps" />
 
         <activity
@@ -52,9 +51,9 @@
             android:name="fr.istic.mmm.adeagenda.AgendaActivity"
             android:label="@string/title_activity_agenda" >
         </activity>
-        
-        <service android:name="fr.istic.mmm.adeagenda.service.UpdateService"/>
-        
+
+        <service android:name="fr.istic.mmm.adeagenda.service.UpdateService" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCgZ1iAsEQIqiVZRBd72Q77Mt6bhoitlhk" />
@@ -62,6 +61,22 @@
         <activity
             android:name="fr.istic.mmm.adeagenda.AgendaPagerActivity"
             android:label="@string/title_activity_agenda_pager" >
+        </activity>
+        <activity
+            android:name="fr.istic.mmm.adeagenda.EventListActivity"
+            android:label="@string/title_event_list"
+            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.istic.mmm.adeagenda.HomeActivity" />
+        </activity>
+        <activity
+            android:name="fr.istic.mmm.adeagenda.EventDetailActivity"
+            android:label="@string/title_event_detail"
+            android:parentActivityName=".EventListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EventListActivity" />
         </activity>
     </application>
 

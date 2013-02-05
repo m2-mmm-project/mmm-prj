@@ -1,6 +1,5 @@
 package fr.istic.mmm.adeagenda;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,15 +7,20 @@ import java.util.List;
 
 import net.fortuna.ical4j.model.DateTime;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.istic.mmm.adeagenda.db.AgendaDb;
 import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
@@ -32,14 +36,25 @@ public class AgendaFragment extends Fragment {
 
 	public static final String ARG_DATE = "date";
 
+	private List<Event> events;
 	private Date date;
 	private ListView eventList;
 	private SimpleAdapter eventAdapter;
 	private List<HashMap<String, String>> data;
-	private String from[] = { ITEM_NAME, ITEM_DATE, ITEM_START, ITEM_END,
-			ITEM_PLACE };
-	private int to[] = { R.id.event_name, R.id.event_date, R.id.event_start,
-			R.id.event_end, R.id.event_place };
+	private String from[] = {
+			ITEM_NAME,
+			ITEM_DATE,
+			ITEM_START,
+			ITEM_END,
+			ITEM_PLACE
+	};
+	private int to[] = {
+			R.id.event_name,
+			R.id.event_date,
+			R.id.event_start,
+			R.id.event_end,
+			R.id.event_place
+	};
 	private LinearLayout progress;
 	private TextView emptyList;
 	private Context context;
@@ -57,10 +72,10 @@ public class AgendaFragment extends Fragment {
 		Bundle args = getArguments();
 		// definition de la date associée à cet onglet
 		date = new Date(args.getLong(ARG_DATE));
-		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 
 		eventList = (ListView) rootView.findViewById(R.id.eventList);
 		eventList.setEmptyView(rootView.findViewById(R.id.emptyList));
+		eventList.setOnItemClickListener(eventListListener);
 
 		data = new ArrayList<HashMap<String, String>>();
 		eventAdapter = new SimpleAdapter(getActivity(), data,
@@ -82,7 +97,7 @@ public class AgendaFragment extends Fragment {
 			public void run() {
 				AgendaDb db = new AgendaDb(context);
 				DateTime wantedDate = new DateTime(date);
-				List<Event> events = db.getEventByDay(wantedDate);
+				events = db.getEventByDay(wantedDate);
 				
 				if (events.isEmpty()) {
 					getActivity().runOnUiThread(new Runnable() {
@@ -113,4 +128,26 @@ public class AgendaFragment extends Fragment {
 			}
 		}).start();
 	}
+	
+	private OnItemClickListener eventListListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adpt, View view, int pos, long id) {
+			Event e = events.get(pos);
+			Toast.makeText(getActivity(), "Event "+e.getName(), Toast.LENGTH_SHORT).show();
+			
+			Bundle eventInfo = new Bundle();
+			eventInfo.putString(EventFragment.EVENT_NAME, e.getName());
+			eventInfo.putLong(EventFragment.EVENT_START, e.getStart().getTime());
+			eventInfo.putLong(EventFragment.EVENT_END, e.getEnd().getTime());
+			eventInfo.putString(EventFragment.EVENT_PLACE, e.getPlace());
+			eventInfo.putString(EventFragment.EVENT_DESCRIPTION, e.getDescription());
+			
+			Fragment fragment = new EventFragment();
+			fragment.setArguments(eventInfo);
+			Intent fragIntent = new Intent(getActivity(), EventFragment.class);
+//			fragIntent.putExtras(eventInfo);
+			startActivity(fragIntent);
+		}
+	};
 }
