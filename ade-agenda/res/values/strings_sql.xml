@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sql_place_position_data">
+        <item>\'Test\', 0.9, 15.74</item>
+        <item>\'Test\', 0.1, 44.55</item>
+        <item>\'Test\', 0.1, 44.55</item>
+        <item>\'Test\', 0.1, 44.55</item>
+    </string-array>
+
+</resources>

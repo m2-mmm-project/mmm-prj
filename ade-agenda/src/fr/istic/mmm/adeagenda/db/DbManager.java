@@ -1,18 +1,10 @@
 package fr.istic.mmm.adeagenda.db;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import fr.istic.mmm.adeagenda.R;
 
 public class DbManager extends SQLiteOpenHelper {
 
@@ -59,7 +51,7 @@ public class DbManager extends SQLiteOpenHelper {
 	public static final int IDX_COL_POS_LAT = 2;
 	public static final int IDX_COL_POS_LNG = 3;
 
-	public static final String[] FIELDS_GPSPOSITION = { COL_RES_ID,
+	public static final String[] FIELDS_GPSPOSITION = { COL_POS_ID,
 			COL_POS_PLACE, COL_POS_LAT, COL_POS_LNG };
 
 	private static final String CREATE_POS_DB = "CREATE TABLE "
@@ -77,41 +69,20 @@ public class DbManager extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		try {
-			db.query(TABLE_PLACE_POSITION, null, null, null, null, null, null);
-			Log.v("DbManager", "Database already exist");
-		} catch (SQLiteException e) {
-			Log.v("DbManager", "Create tables");
-			// Create RESOURCES table
-			db.execSQL(CREATE_RES_DB);
+		Log.v("DbManager", "Create tables");
 
-			// Create PLACE_POSITION table
-			db.execSQL(CREATE_POS_DB);
+		// Create RESOURCES table
+		db.execSQL(CREATE_RES_DB);
 
-			String androidDBPath = context.getAssets() + "/data/"
-					+ context.getPackageName() + "/databases/";
-			String fileDBPath = context.getPackageResourcePath();
+		// Create PLACE_POSITION table
+		db.execSQL(CREATE_POS_DB);
 
-			File androidDB = new File(androidDBPath, NAME);
-			File fileDB = new File(fileDBPath, NAME);
-				
-			if (fileDB.exists()) {
-				try {
-					FileChannel src = new FileInputStream(fileDB).getChannel();
-
-					FileChannel dst = new FileOutputStream(androidDB)
-							.getChannel();
-					dst.transferFrom(src, 0, src.size());
-					src.close();
-					dst.close();
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} else
-				Log.v("DbManager", fileDB.getAbsolutePath());
-			Log.v("DbManager", "Copying the database ");
+		Log.v("DbManager", "Populate database with Positions");
+		String[] values = context.getResources().getStringArray(R.array.sql_place_position_data);
+		for (String v : values) {
+			db.execSQL("INSERT INTO " + TABLE_PLACE_POSITION + " ("
+					+ COL_POS_PLACE + ", " + COL_POS_LAT + ", " + COL_POS_LNG
+					+ ") VALUES (" + v + ");");
 		}
 	}
 

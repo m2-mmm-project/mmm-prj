@@ -24,6 +24,7 @@ public abstract class Config {
 	// Noms des paramètres des Bundles
 	public static final String MAP_POSITION_LAT = "positionLat";
 	public static final String MAP_POSITION_LNG = "positionLng";
+	public static final String MAP_PLACE_NAME = "positionName";
 	
 	// Position du centre de la map
 	public static final LatLng CENTER_ISTIC = new LatLng(48.115671, -1.63813);

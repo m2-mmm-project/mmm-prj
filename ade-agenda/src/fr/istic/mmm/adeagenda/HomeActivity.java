@@ -1,9 +1,5 @@
 package fr.istic.mmm.adeagenda;
 
-import java.io.File;
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +10,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
-import fr.istic.mmm.adeagenda.db.AgendaDb;
-import fr.istic.mmm.adeagenda.db.GPSPositionDB;
-import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.service.UpdateService;
 import fr.istic.mmm.adeagenda.utils.Config;
 
@@ -77,22 +70,10 @@ public class HomeActivity extends SherlockActivity {
 	 * @param view
 	 */
 	public void onClickMap(View view) {
-		String name = "ADEAgenda.sqlite";
-		String androidDBPath = "/data/"
-				+ this.getPackageName() + "/databases/";
-		File androidDB = new File(androidDBPath, name);
-
-		if (androidDB.exists())
-			Log.v("DbManager", "Andro DB Exist");
-		else
-			Log.v("DbManager", "Andro DB not exist");
-		
-		GPSPositionDB db2 = new GPSPositionDB(this);
-		db2.add("B02B-E212", 48.115888, -1.637961);
-
-//		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-//		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
-//		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
-//		startActivity(intent);
+		Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+		intent.putExtra(Config.MAP_POSITION_LAT, 48.115671);
+		intent.putExtra(Config.MAP_POSITION_LNG, -1.63813);
+		intent.putExtra(Config.MAP_PLACE_NAME, "B12D-I50");
+		startActivity(intent);
 	}
 }

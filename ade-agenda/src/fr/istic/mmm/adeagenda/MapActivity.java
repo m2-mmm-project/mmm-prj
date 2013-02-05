@@ -26,11 +26,13 @@ public class MapActivity extends FragmentActivity {
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.fragment_map)).getMap();
 
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(Config.CENTER_ISTIC, 18));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(Config.CENTER_ISTIC,
+				18));
 
 		// Add a marker if the bundle contains a position
 		if (getIntent().hasExtra(Config.MAP_POSITION_LAT)
-				&& getIntent().hasExtra(Config.MAP_POSITION_LNG)) {
+				&& getIntent().hasExtra(Config.MAP_POSITION_LNG)
+				&& getIntent().hasExtra(Config.MAP_PLACE_NAME)) {
 
 			Log.v("MapActivity", "Add a marker");
 
@@ -38,9 +40,8 @@ public class MapActivity extends FragmentActivity {
 					0);
 			double posLng = getIntent().getDoubleExtra(Config.MAP_POSITION_LNG,
 					0);
-			map.addMarker(new MarkerOptions()
-					.position(new LatLng(posLat, posLng)).title("02B - E007")
-					.snippet("Salle de TP"));
+			map.addMarker(new MarkerOptions().position(
+					new LatLng(posLat, posLng)).title(getIntent().getStringExtra(Config.MAP_PLACE_NAME)));
 		}
 
 		// Zoom in, animating the camera.

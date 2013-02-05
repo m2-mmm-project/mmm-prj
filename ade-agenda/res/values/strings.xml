@@ -9,7 +9,6 @@
     <string name="title_activity_config">ConfigActivity</string>
     <string name="title_activity_map">Carte de la FAC</string>
     <string name="load_calendar">Load from the internet</string>
-
     <string name="title_activity_agenda">Mon Agenda</string>
     <string name="title_activity_agenda_pager">Mon agenda</string>
 
