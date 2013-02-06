@@ -112,28 +112,28 @@
                     android:onClick="onClickCheckBoxAlarm" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+<!--             <RelativeLayout -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:orientation="horizontal" > -->
 
-                <Spinner
-                    android:id="@+id/spinner_alarm_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:entries="@array/time_alarm"
-                    android:prompt="@string/resource_prompt" />
+<!--                 <Spinner -->
+<!--                     android:id="@+id/spinner_alarm_time" -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_alignParentLeft="true" -->
+<!--                     android:entries="@array/time_alarm" -->
+<!--                     android:prompt="@string/resource_prompt" /> -->
 
-                <Spinner
-                    android:id="@+id/spinner_alarm_recurence"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/spinner_alarm_time"
-                    android:entries="@array/recurence_alarm"
-                    android:prompt="@string/resource_prompt" />
-            </RelativeLayout>
+<!--                 <Spinner -->
+<!--                     android:id="@+id/spinner_alarm_recurence" -->
+<!--                     android:layout_width="match_parent" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_alignParentRight="true" -->
+<!--                     android:layout_toRightOf="@+id/spinner_alarm_time" -->
+<!--                     android:entries="@array/recurence_alarm" -->
+<!--                     android:prompt="@string/resource_prompt" /> -->
+<!--             </RelativeLayout> -->
         </LinearLayout>
     </ScrollView>
 

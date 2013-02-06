@@ -15,6 +15,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateFormat;
 import android.util.Log;
 import fr.istic.mmm.adeagenda.EventActivity;
+import fr.istic.mmm.adeagenda.HomeActivity;
 import fr.istic.mmm.adeagenda.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -44,7 +45,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 				.setContentText(eventName + " à " + strTime + " " + eventPlace)
 				.setAutoCancel(true);
 		
-		((Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE)).vibrate(500);
+//		((Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE)).vibrate(500);
 
 
 		// The stack builder object will contain an artificial back stack for
@@ -54,8 +55,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 		TaskStackBuilder stackBuilder = TaskStackBuilder.from(context);
 
 		// Adds the back stack for the Intent (but not the Intent itself)
+		
 		stackBuilder.addParentStack(EventActivity.class);
-
+		stackBuilder.addParentStack(HomeActivity.class);
+		
 		// Adds the Intent that starts the Activity to the top of the stack
 		Bundle eventInfo = new Bundle();
 		eventInfo
@@ -79,7 +82,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 		NotificationManager mNotificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
-		mNotificationManager
-				.notify(NOTIFICATION_ID, mBuilder.getNotification());
+		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.getNotification());
 	}
 }

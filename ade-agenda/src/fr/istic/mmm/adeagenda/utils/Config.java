@@ -17,6 +17,7 @@ public abstract class Config {
 	public static final String PREF_END_DATE = "lastDate";
 	public static final String PREF_ALARM_TIME = "alarmTime";
 	public static final String PREF_ALARM_REC = "alarmRec";
+	public static final String PREF_NOTIFICATION = "notifications";  
 	
 
 	// Stockage
@@ -34,5 +35,5 @@ public abstract class Config {
 	
 	// Période d'éxécution de l'UpdateService
 	public static final long TASK_PERIOD = 60000*60;  // Toutes les heures
-	public static final long NOTIF_TASK_PERIOD = 60000*1;  
+	public static final long NOTIF_TASK_PERIOD = 60000*1;
 }

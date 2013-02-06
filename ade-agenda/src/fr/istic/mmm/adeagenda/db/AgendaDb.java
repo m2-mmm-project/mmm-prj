@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import fr.istic.mmm.adeagenda.model.Event;
 import fr.istic.mmm.adeagenda.utils.DateFormater;
 
@@ -73,8 +74,8 @@ public class AgendaDb {
 		open();
 
 		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
-				DbManager.FIELDS_RESOURCE, "date(" + DbManager.COL_RES_START
-						+ ")>date('" + DateFormater.getDateSQLString(day)
+				DbManager.FIELDS_RESOURCE, "datetime(" + DbManager.COL_RES_START
+						+ ")>datetime('" + DateFormater.getDateTimeSQLString(day)
 						+ "')", null, null, null, DbManager.COL_RES_START, "1");
 
 		List<Event> events = cursorToEvents(cursor);

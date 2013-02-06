@@ -74,6 +74,8 @@ public class ConfigActivity extends Activity {
 				false);
 
 		if (configIsDone) {
+			
+			
 
 			String firstDate = settings.getString(Config.PREF_START_DATE, "");
 			String lastDate = settings.getString(Config.PREF_END_DATE, "");
@@ -114,23 +116,25 @@ public class ConfigActivity extends Activity {
 				endYear, endMonth, endDay);
 
 		// TODO set default spiner value
-		spinnerAlarmTime = (Spinner) findViewById(R.id.spinner_alarm_time);
-		spinnerAlarmRecurrence = (Spinner) findViewById(R.id.spinner_alarm_recurence);
+//		spinnerAlarmTime = (Spinner) findViewById(R.id.spinner_alarm_time);
+//		spinnerAlarmRecurrence = (Spinner) findViewById(R.id.spinner_alarm_recurence);
 
 		// ALARM
 		cbAlarm = (CheckBox) findViewById(R.id.checkBox_alarm);
+		cbAlarm.setChecked(settings.getBoolean(Config.PREF_NOTIFICATION, false));
+				
 
-		int alarmTime = settings.getInt(Config.PREF_ALARM_TIME, -1);
-		int alarmRec = settings.getInt(Config.PREF_ALARM_REC, -1);
+//		int alarmTime = settings.getInt(Config.PREF_ALARM_TIME, -1);
+//		int alarmRec = settings.getInt(Config.PREF_ALARM_REC, -1);
 
-		if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
-			cbAlarm.setChecked(true);
-			spinnerAlarmTime.setEnabled(true);
-			spinnerAlarmRecurrence.setEnabled(true);
-		} else {
-			spinnerAlarmTime.setEnabled(false);
-			spinnerAlarmRecurrence.setEnabled(false);
-		}
+//		if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
+//			cbAlarm.setChecked(true);
+//			spinnerAlarmTime.setEnabled(true);
+//			spinnerAlarmRecurrence.setEnabled(true);
+//		} else {
+//			spinnerAlarmTime.setEnabled(false);
+//			spinnerAlarmRecurrence.setEnabled(false);
+//		}
 
 	}
 
@@ -143,13 +147,13 @@ public class ConfigActivity extends Activity {
 	}
 
 	public void onClickCheckBoxAlarm(View view) {
-		if (((CheckBox) view).isChecked()) {
-			spinnerAlarmTime.setEnabled(true);
-			spinnerAlarmRecurrence.setEnabled(true);
-		} else {
-			spinnerAlarmTime.setEnabled(false);
-			spinnerAlarmRecurrence.setEnabled(false);
-		}
+//		if (((CheckBox) view).isChecked()) {
+//			spinnerAlarmTime.setEnabled(true);
+//			spinnerAlarmRecurrence.setEnabled(true);
+//		} else {
+//			spinnerAlarmTime.setEnabled(false);
+//			spinnerAlarmRecurrence.setEnabled(false);
+//		}
 	}
 
 	public void onClickValidate(View view) {
@@ -177,15 +181,16 @@ public class ConfigActivity extends Activity {
 			lastDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
 		}
 
-		if (cbAlarm.isChecked()) {
-			edit.putInt(Config.PREF_ALARM_TIME, 5); // TODO set spiner val
-			edit.putInt(Config.PREF_ALARM_REC, 1); // TODO set spiner val
-		} else {
-			edit.putInt(Config.PREF_ALARM_TIME, -1);
-			edit.putInt(Config.PREF_ALARM_REC, -1);
-		}
+//		if (cbAlarm.isChecked()) {
+//			edit.putInt(Config.PREF_ALARM_TIME, 5); // TODO set spiner val
+//			edit.putInt(Config.PREF_ALARM_REC, 1); // TODO set spiner val
+//		} else {
+//			edit.putInt(Config.PREF_ALARM_TIME, -1);
+//			edit.putInt(Config.PREF_ALARM_REC, -1);
+//		}
 
 		edit.putInt(Config.PREF_PROJECT_ID, projectId);
+		edit.putBoolean(Config.PREF_NOTIFICATION, cbAlarm.isChecked());
 		edit.putString(Config.PREF_RESOURCES_ID, resources);
 		edit.putString(Config.PREF_LOGIN, "cal");
 		edit.putString(Config.PREF_PASSWORD, "visu");
@@ -206,7 +211,7 @@ public class ConfigActivity extends Activity {
 
 		this.finish();
 	}
-
+	
 	public void showToast(final String message) {
 		runOnUiThread(new Runnable() {
 			public void run() {

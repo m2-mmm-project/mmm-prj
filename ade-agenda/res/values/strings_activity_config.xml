@@ -10,8 +10,8 @@
 	<string name="label_project">Projet</string>
 	<string name="label_ressources">Ressources</string>
 	
-	<string name="title_separator_alarm">Alarme</string>
-	<string name="label_alarm">Activer l\'alarme</string>
+	<string name="title_separator_alarm">Notifications</string>
+	<string name="label_alarm">Activer les notifications</string>
 	
 	<string-array name="time_alarm">
         <item>1 minute</item>
