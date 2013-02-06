@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.fortuna.ical4j.model.DateTime;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -54,7 +52,7 @@ public class UpdateService extends Service {
 			public void run() {
 				handler.post(new Runnable() {
 					public void run() {
-						Log.v(TAG, "Running task");
+						Log.v(TAG, "Running task Download");
 						settings = getSharedPreferences(Config.ADE_PREF, 0);
 
 						boolean configIsDone = settings.getBoolean(
@@ -102,45 +100,58 @@ public class UpdateService extends Service {
 				handler.post(new Runnable() {
 					public void run() {
 						Log.v(TAG, "Setting up alarm for notification");
+						settings = getSharedPreferences(Config.ADE_PREF, 0);
 
-						// get a Calendar object with current time
-						Calendar cal = Calendar.getInstance();
-						cal.add(Calendar.SECOND, 10);
+						boolean configIsDone = settings.getBoolean(
+								Config.PREF_CONFIG_DONE, false);
 
-						Date date = new Date();
-						AgendaDb db = new AgendaDb(getApplicationContext());
-						DateTime wantedDate = new DateTime(date);
-						Event event = db.getNextEvent(wantedDate);
+						int alarmTime = settings.getInt(Config.PREF_ALARM_TIME,
+								-1);
+						int alarmRec = settings.getInt(Config.PREF_ALARM_REC,
+								-1);
 
-						// Creates an explicit intent for an Activity in your
-						// app
-						if (event != null) {
-							Bundle eventInfo = new Bundle();
-							eventInfo.putString(EventActivity.EVENT_NAME,
-									event.getName());
-							eventInfo.putLong(EventActivity.EVENT_START, event
-									.getStart().getTime());
-							eventInfo.putLong(EventActivity.EVENT_END, event
-									.getEnd().getTime());
-							eventInfo.putString(EventActivity.EVENT_PLACE,
-									event.getPlace());
-							eventInfo.putString(
-									EventActivity.EVENT_DESCRIPTION,
-									event.getDescription());
+						if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
+							Log.v(TAG, "Notification demandé");
+							// get a Calendar object with current time
+							Calendar cal = Calendar.getInstance();
+							cal.add(Calendar.SECOND, 10);
 
-							Intent intent = new Intent(getApplicationContext(),
-									AlarmReceiver.class);
-							intent.putExtras(eventInfo);
+							AgendaDb db = new AgendaDb(getApplicationContext());
+							Event event = db.getNextEvent(new Date());
 
-							PendingIntent pendingIntent = PendingIntent
-									.getBroadcast(getApplicationContext(),
-											13454, intent, 0);
-							AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-							alarmManager.set(AlarmManager.RTC_WAKEUP,
-									cal.getTimeInMillis() + 1000, pendingIntent);
+							// Creates an explicit intent for an Activity in
+							// your
+							// app
+							if (event != null) {
+								Bundle eventInfo = new Bundle();
+								eventInfo.putString(EventActivity.EVENT_NAME,
+										event.getName());
+								eventInfo.putLong(EventActivity.EVENT_START,
+										event.getStart().getTime());
+								eventInfo.putLong(EventActivity.EVENT_END,
+										event.getEnd().getTime());
+								eventInfo.putString(EventActivity.EVENT_PLACE,
+										event.getPlace());
+								eventInfo.putString(
+										EventActivity.EVENT_DESCRIPTION,
+										event.getDescription());
+
+								Intent intent = new Intent(
+										getApplicationContext(),
+										AlarmReceiver.class);
+								intent.putExtras(eventInfo);
+
+								PendingIntent pendingIntent = PendingIntent
+										.getBroadcast(getApplicationContext(),
+												13454, intent, 0);
+								AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+								alarmManager.set(AlarmManager.RTC_WAKEUP,
+										cal.getTimeInMillis() + 1000,
+										pendingIntent);
+
+								Log.v(TAG, "Alarm setted");
+							}
 						}
-
-						Log.v(TAG, "Alarm setted");
 
 					}
 				});

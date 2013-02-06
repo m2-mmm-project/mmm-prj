@@ -20,6 +20,10 @@ public class DateFormater {
 				getCalendarFromInt(year, month, day));
 	}
 	
+	public static String getDateFullDisplayString(Date day) {
+		return (String) DateFormat.format("EEEE d MMMM, yyyy", day);
+	}
+	
 	public static String getDayDisplayString(Calendar cal) {
 		return (String) DateFormat.format("EEEE", cal);
 	}

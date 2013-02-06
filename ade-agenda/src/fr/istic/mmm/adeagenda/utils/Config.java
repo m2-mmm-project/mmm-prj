@@ -15,6 +15,9 @@ public abstract class Config {
 	public static final String PREF_PASSWORD = "password";
 	public static final String PREF_START_DATE = "firstDate";
 	public static final String PREF_END_DATE = "lastDate";
+	public static final String PREF_ALARM_TIME = "alarmTime";
+	public static final String PREF_ALARM_REC = "alarmRec";
+	
 
 	// Stockage
 	public static final String FILE_NAME = "ADECal.ics";

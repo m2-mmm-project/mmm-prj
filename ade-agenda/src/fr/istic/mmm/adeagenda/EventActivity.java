@@ -41,7 +41,7 @@ public class EventActivity extends Activity {
 		event = new Event(name, new Date(start), new Date(end), place, description);
 		
 		((TextView) findViewById(R.id.event_name)).setText(event.getName());
-		((TextView) findViewById(R.id.event_date)).setText(DateFormater.getDateString(event.getStart()));
+		((TextView) findViewById(R.id.event_date)).setText(DateFormater.getDateFullDisplayString(event.getStart()));
 		((TextView) findViewById(R.id.event_start)).setText(getString(R.string.event_start, DateFormater.getTimeString(event.getStart())));
 		((TextView) findViewById(R.id.event_end)).setText(getString(R.string.event_end, DateFormater.getTimeString(event.getEnd())));
 		((TextView) findViewById(R.id.event_place)).setText(event.getPlace());

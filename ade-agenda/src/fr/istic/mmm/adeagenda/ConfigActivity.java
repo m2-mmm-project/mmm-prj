@@ -28,6 +28,7 @@ public class ConfigActivity extends Activity {
 	private DatePickerDialog dialogDateStart;
 	private DatePickerDialog dialogDateEnd;
 	private Spinner spinnerAlarmTime, spinnerAlarmRecurrence;
+	private CheckBox cbAlarm;
 
 	private int projectId;
 	private String resources;
@@ -56,8 +57,8 @@ public class ConfigActivity extends Activity {
 			endYear = year;
 			endMonth = monthOfYear;
 			endDay = dayOfMonth;
-			etDateEnd.setText(DateFormater.getDateDisplayString(endYear, endMonth,
-					endDay));
+			etDateEnd.setText(DateFormater.getDateDisplayString(endYear,
+					endMonth, endDay));
 
 		}
 	};
@@ -68,16 +69,20 @@ public class ConfigActivity extends Activity {
 		setContentView(R.layout.activity_config);
 
 		SharedPreferences settings = getSharedPreferences(Config.ADE_PREF, 0);
-		String firstDate = settings.getString(Config.PREF_START_DATE, "");
-		String lastDate = settings.getString(Config.PREF_END_DATE, "");
 
-		if (firstDate != "" && lastDate != "") {
+		boolean configIsDone = settings.getBoolean(Config.PREF_CONFIG_DONE,
+				false);
+
+		if (configIsDone) {
+
+			String firstDate = settings.getString(Config.PREF_START_DATE, "");
+			String lastDate = settings.getString(Config.PREF_END_DATE, "");
 			startYear = Integer.parseInt(firstDate.substring(0, 4));
-			startMonth = Integer.parseInt(firstDate.substring(5, 7))-1;
+			startMonth = Integer.parseInt(firstDate.substring(5, 7)) - 1;
 			startDay = Integer.parseInt(firstDate.substring(8, 10));
 
 			endYear = Integer.parseInt(lastDate.substring(0, 4));
-			endMonth = Integer.parseInt(lastDate.substring(5, 7))-1;
+			endMonth = Integer.parseInt(lastDate.substring(5, 7)) - 1;
 			endDay = Integer.parseInt(lastDate.substring(8, 10));
 		} else {
 			startYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -108,10 +113,25 @@ public class ConfigActivity extends Activity {
 		dialogDateEnd = new DatePickerDialog(this, mEndDateSetListener,
 				endYear, endMonth, endDay);
 
+		// TODO set default spiner value
 		spinnerAlarmTime = (Spinner) findViewById(R.id.spinner_alarm_time);
 		spinnerAlarmRecurrence = (Spinner) findViewById(R.id.spinner_alarm_recurence);
-		spinnerAlarmTime.setEnabled(false);
-		spinnerAlarmRecurrence.setEnabled(false);
+
+		// ALARM
+		cbAlarm = (CheckBox) findViewById(R.id.checkBox_alarm);
+
+		int alarmTime = settings.getInt(Config.PREF_ALARM_TIME, -1);
+		int alarmRec = settings.getInt(Config.PREF_ALARM_REC, -1);
+
+		if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
+			cbAlarm.setChecked(true);
+			spinnerAlarmTime.setEnabled(true);
+			spinnerAlarmRecurrence.setEnabled(true);
+		} else {
+			spinnerAlarmTime.setEnabled(false);
+			spinnerAlarmRecurrence.setEnabled(false);
+		}
+
 	}
 
 	public void onClickDateStart(View view) {
@@ -139,39 +159,51 @@ public class ConfigActivity extends Activity {
 
 		resources = "129"; // TODO
 		projectId = 31;
-		
+
 		String firstDate;
 		String lastDate;
-		
+
 		// Switch date if necessary
-		if((startYear > endYear) || (startYear == endYear && startMonth > endMonth) || (startYear == endYear && startMonth == endMonth && startDay > endDay)){
-			firstDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
-			lastDate = DateFormater.getDateURLString(startYear, startMonth,	startDay);
+		if ((startYear > endYear)
+				|| (startYear == endYear && startMonth > endMonth)
+				|| (startYear == endYear && startMonth == endMonth && startDay > endDay)) {
+			firstDate = DateFormater
+					.getDateURLString(endYear, endMonth, endDay);
+			lastDate = DateFormater.getDateURLString(startYear, startMonth,
+					startDay);
 		} else {
-			firstDate = DateFormater.getDateURLString(startYear, startMonth,startDay);
+			firstDate = DateFormater.getDateURLString(startYear, startMonth,
+					startDay);
 			lastDate = DateFormater.getDateURLString(endYear, endMonth, endDay);
 		}
-		
-		
-		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
+
+		if (cbAlarm.isChecked()) {
+			edit.putInt(Config.PREF_ALARM_TIME, 5); // TODO set spiner val
+			edit.putInt(Config.PREF_ALARM_REC, 1); // TODO set spiner val
+		} else {
+			edit.putInt(Config.PREF_ALARM_TIME, -1);
+			edit.putInt(Config.PREF_ALARM_REC, -1);
+		}
+
 		edit.putInt(Config.PREF_PROJECT_ID, projectId);
 		edit.putString(Config.PREF_RESOURCES_ID, resources);
 		edit.putString(Config.PREF_LOGIN, "cal");
 		edit.putString(Config.PREF_PASSWORD, "visu");
 		edit.putString(Config.PREF_START_DATE, firstDate);
 		edit.putString(Config.PREF_END_DATE, lastDate);
+		edit.putBoolean(Config.PREF_CONFIG_DONE, true);
 		edit.apply();
 		Log.v("Config done", "Settings saved");
-		
 
 		Log.v("Config done", "Downloading new calendar");
 		try {
-			DownloadCalendarTask progressTask = new DownloadCalendarTask(projectId, resources, "cal", "visu", firstDate, lastDate);
+			DownloadCalendarTask progressTask = new DownloadCalendarTask(
+					projectId, resources, "cal", "visu", firstDate, lastDate);
 			progressTask.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		this.finish();
 	}
 
@@ -179,7 +211,8 @@ public class ConfigActivity extends Activity {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				android.util.Log.d(TAG, message);
-				Toast.makeText(ConfigActivity.this, message, Toast.LENGTH_SHORT).show();
+				Toast.makeText(ConfigActivity.this, message, Toast.LENGTH_SHORT)
+						.show();
 			}
 		});
 	}
