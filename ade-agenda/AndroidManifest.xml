@@ -68,8 +68,10 @@
             android:label="@string/title_activity_agenda_pager" />
         <activity
             android:name="fr.istic.mmm.adeagenda.EventActivity"
-            android:label="@string/title_activity_event"
-            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
+            android:label="@string/title_activity_event" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.istic.mmm.adeagenda.HomeActivity" />
         </activity>
     </application>
 

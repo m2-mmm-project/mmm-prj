@@ -4,10 +4,12 @@ import java.util.Date;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateFormat;
@@ -40,7 +42,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 				context).setSmallIcon(R.drawable.logo)
 				.setContentTitle("ADEAgenda - Notification")
 				.setContentText(eventName + " à " + strTime + " " + eventPlace)
-				.setAutoCancel(true).setVibrate(new long[] { 1000 });
+				.setAutoCancel(true);
+		
+		((Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE)).vibrate(500);
+
 
 		// The stack builder object will contain an artificial back stack for
 		// the started Activity.
