@@ -92,7 +92,8 @@ public class UpdateService extends Service {
 			}
 		};
 
-		timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
+		// FIXME kickage de l'update chronique
+		//timer.schedule(doAsynchronousTask, 0, Config.TASK_PERIOD);
 
 		TimerTask setNotificationTask = new TimerTask() {
 			@Override
@@ -106,11 +107,11 @@ public class UpdateService extends Service {
 						boolean configIsDone = settings.getBoolean(	Config.PREF_CONFIG_DONE, false);
 						boolean notification = settings.getBoolean(	Config.PREF_NOTIFICATION, false);
 						
-						if(notification){
+						if(configIsDone && notification){
 							int alarmTime = settings.getInt(Config.PREF_ALARM_TIME,	-1);
 							int alarmRec = settings.getInt(Config.PREF_ALARM_REC, -1);
 	
-							if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
+//							if (configIsDone && (alarmTime >= 0 || alarmRec >= 0)) {
 								Log.v(TAG, "Notification demandé");
 								// get a Calendar object with current time
 								Calendar cal = Calendar.getInstance();
@@ -118,7 +119,7 @@ public class UpdateService extends Service {
 	
 								AgendaDb db = new AgendaDb(getApplicationContext());
 								Event event = db.getNextEvent(new Date());
-								Log.v(TAG, ""+event.getStart());
+//								Log.v(TAG, ""+event.getStart());
 								// Creates an explicit intent for an Activity in your app
 								if (event != null) {
 									Bundle eventInfo = new Bundle();
@@ -148,7 +149,7 @@ public class UpdateService extends Service {
 	
 									Log.v(TAG, "Alarm setted");
 								}
-							}
+//							}
 						}
 					}
 				});

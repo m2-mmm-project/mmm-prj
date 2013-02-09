@@ -42,15 +42,19 @@
         </activity>
         <activity
             android:name="fr.istic.mmm.adeagenda.ConfigActivity"
-            android:label="@string/title_activity_config" >
+            android:label="@string/title_activity_config"
+            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.istic.mmm.adeagenda.HomeActivity" />
         </activity>
         <activity
             android:name="fr.istic.mmm.adeagenda.MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
-        <activity
-            android:name="fr.istic.mmm.adeagenda.AgendaActivity"
-            android:label="@string/title_activity_agenda" >
+            android:label="@string/title_activity_map"
+            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.istic.mmm.adeagenda.HomeActivity" />
         </activity>
 
         <service android:name="fr.istic.mmm.adeagenda.service.UpdateService" />
@@ -65,13 +69,19 @@
 
         <activity
             android:name="fr.istic.mmm.adeagenda.AgendaPagerActivity"
-            android:label="@string/title_activity_agenda_pager" />
-        <activity
-            android:name="fr.istic.mmm.adeagenda.EventActivity"
-            android:label="@string/title_activity_event" >
+            android:label="@string/title_activity_agenda_pager"
+            android:parentActivityName="fr.istic.mmm.adeagenda.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.istic.mmm.adeagenda.HomeActivity" />
+        </activity>
+        <activity
+            android:name="fr.istic.mmm.adeagenda.EventActivity"
+            android:label="@string/title_activity_event"
+            android:parentActivityName="fr.istic.mmm.adeagenda.AgendaPagerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.istic.mmm.adeagenda.AgendaPagerActivity" />
         </activity>
     </application>
 

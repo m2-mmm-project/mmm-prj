@@ -74,7 +74,7 @@ public class AgendaDb {
 		open();
 
 		Cursor cursor = this.db.query(DbManager.TABLE_RESOURCE,
-				DbManager.FIELDS_RESOURCE, "datetime(" + DbManager.COL_RES_START
+				DbManager.FIELDS_RESOURCE, "datetime(" + DbManager.COL_RES_END
 						+ ")>datetime('" + DateFormater.getDateTimeSQLString(day)
 						+ "')", null, null, null, DbManager.COL_RES_START, "1");
 

@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		CharSequence eventName = extras
 				.getCharSequence(EventActivity.EVENT_NAME);
 		Date eventStart = new Date(extras.getLong(EventActivity.EVENT_START));
-		CharSequence strTime = DateFormat.format("hh:mm", eventStart);
+		CharSequence strTime = DateFormat.format("kk:mm", eventStart);
 		Date eventEnd = new Date(extras.getLong(EventActivity.EVENT_END));
 		CharSequence eventPlace = extras
 				.getCharSequence(EventActivity.EVENT_PLACE);
@@ -57,7 +57,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// Adds the back stack for the Intent (but not the Intent itself)
 		
 		stackBuilder.addParentStack(EventActivity.class);
-		stackBuilder.addParentStack(HomeActivity.class);
 		
 		// Adds the Intent that starts the Activity to the top of the stack
 		Bundle eventInfo = new Bundle();

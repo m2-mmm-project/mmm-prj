@@ -66,5 +66,6 @@ public class HomeActivity extends Activity {
 		intent.putExtra(Config.MAP_POSITION_LAT, Config.CENTER_ISTIC.latitude);
 		intent.putExtra(Config.MAP_POSITION_LNG, Config.CENTER_ISTIC.longitude);
 		intent.putExtra(Config.MAP_PLACE_NAME, "ISTIC");
+		startActivity(intent);
 	}
 }
